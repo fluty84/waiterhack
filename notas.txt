@@ -1,0 +1,23 @@
+Contextos:
+
+Restaurante Logueado
+
+
+
+Componentes:
+
+Formulario Auth
+
+Formulario de registro
+
+"Drop-down" edición
+
+Mesa => socket-comanda
+
+Cart
+
+Menu => producto 
+
+Pago
+
+

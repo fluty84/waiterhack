@@ -15,11 +15,11 @@
 ## Express endpoint table
 
 | HTTP Method 	| URI path      	| Description                                    	| JSON 	|
+| Client Routes	|     	|                                  	|  	|
 |-------------	|---------------	|------------------------------------------------	|---------	|
 | GET         	| `/`             	| Landing  sign-in Form 	| | 
 | POST         	| `/`             	| Landing  sign-in Form  POST	| | 
 | GET         	| `/restaurante/registro`             	| New Restaurant regisrer Form	| | 
-| POST         	| `/restaurante/registro`             	| New Restaurant regisrer POST	| |
 | GET         	| `/restaurante/:id` 	       | Restarurant profile	| | 
 | POST         	| `/restaurante/start` 	       | Restart day and redirect to day-panel	| | 
 | GET         	| `/restaurante/:id/panel` 	       | Working-day Panel	| | 
@@ -37,7 +37,30 @@
 | GET         	| `/restaurante/:id/:tableid/customer-order` 	       | Menu Customer Form  QR LANDING| | 
 | POST         	| `/restaurante/:id/:tableid/customer-order` 	       | Menu Customer Form  | | 
 | GET         	| `/restaurante/:id/:tableid/customer-order/check-out` 	       | Menu Customer Form | | 
-| CRUD         	| `/API/` 	       | API| ✓| 
+| Server Routes	|     	|                                  	|  	|
+|-------------	|---------------	|------------------------------------------------	|---------	
+| POST         	| `/api/create`          	| New Restaurant regisrer 	|✓ |
+| GET       	| `/api/restaurant/:id` 	       | Get one Restaurant | ✓| 
+| POST      	| `/api/create-product` 	       | Create product | ✓| 
+| POST     	| `/api/delete-product` 	       | Delete product | ✓| 
+| POST         	| `/api/create-table` 	       | Table Create 	|✓ | 
+| POST         	| `/api/send-order` 	       | Create order 	|✓ | 
+| POST         	| `/api/edit-order` 	       | Edit order 	|✓ | 
+| POST         	| `/api/accept-order` 	       | Accept order 	|✓ | 
+| POST         	| `/api/delete-order` 	       | Delete order 	|✓ | 
+| POST         	| `/api/delete-total` 	       | Delete total 	|✓ | 
+| POST         	| `/api/update-total` 	       | Update total 	|✓ | 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
