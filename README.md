@@ -50,6 +50,10 @@
 | POST         	| `/api/delete-order` 	       | Delete order 	|✓ | 
 | POST         	| `/api/delete-total` 	       | Delete total 	|✓ | 
 | POST         	| `/api/update-total` 	       | Update total 	|✓ | 
+| POST         	| `/api/restaurant/log-in` 	       | Restaurant Log-in	|✓ | 
+| POST         	| `/api/table/log-in` 	       | Table Log-in	|✓ | 
+
+
 
 
 
