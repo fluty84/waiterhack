@@ -1,0 +1,10 @@
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 50px;
+}
+
+.textField {
+    margin: 20px;
+}
