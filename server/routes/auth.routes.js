@@ -56,6 +56,53 @@ router.post('/signup', (req, res, next) => {
 
 
 
+router.post('/login', (req, res, next) => {
+    const { restaurant, password } = req.body;
+
+    if (restaurant === '' || password === '') {
+        res.status(400).json({ message: "Provide email and password." });
+        return;
+    }
+
+    Restaurant
+        .findOne({restaurant })
+        .then((foundUser) => {
+
+            if (!foundUser) {
+                res.status(401).json({ message: "User not found." })
+                return;
+            }
+
+            if (bcrypt.compareSync(password, foundUser.password)) {
+
+                const { _id, email, restaurant } = foundUser;
+
+                const payload = { _id, email, restaurant };
+
+                const authToken = jwt.sign(
+                    payload,
+                    process.env.TOKEN_SECRET,
+                    { algorithm: 'HS256', expiresIn: "6h" }
+                );
+
+                res.status(200).json({ authToken });
+            }
+            else {
+                res.status(401).json({ message: "Unable to authenticate the user" });
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({ message: "Internal Server Error" })
+        })
+})
+
+
+
+
+
+
+
 
 
 
