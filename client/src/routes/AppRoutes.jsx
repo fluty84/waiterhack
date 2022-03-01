@@ -1,16 +1,19 @@
-import IndexPage from "./pages/IndexPage";
-import RegisterPage from "./pages/RegisterPage";
+import IndexPage from "../pages/IndexPage/IndexPage";
+import RegisterPage from "../pages/RegisterPage";
 
-const { Routes, Route } = require("react-router-dom");
+import { Routes, Route } from 'react-router-dom'
 
 
 
 const AppRoutes = () => {
-  return (
+  return (<>
+  
     <Routes>
+   
       <Route path="/" element={<IndexPage />}/>
       <Route path="/restaurante/registro" element={<RegisterPage/>}></Route>
     </Routes>
+    </>
   );
 };
 
