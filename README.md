@@ -38,7 +38,7 @@
 | POST         	| `/restaurante/:id/:tableid/customer-order` 	       | Menu Customer Form  | | 
 | GET         	| `/restaurante/:id/:tableid/customer-order/check-out` 	       | Menu Customer Form | | 
 | Server Routes	|     	|                                  	|  	|
-|-------------	|---------------	|------------------------------------------------	|---------	
+|	|	|	|	
 | POST         	| `/api/create`          	| New Restaurant regisrer 	|✓ |
 | GET       	| `/api/restaurant/:id` 	       | Get one Restaurant | ✓| 
 | POST      	| `/api/create-product` 	       | Create product | ✓| 
