@@ -156,7 +156,7 @@ router.put("/edit-order", (req, res) => {
 })
 
 
-// accepto order
+// accept order
 router.post("/accept-order", (req, res) => {
 
     const { id } = req.body
