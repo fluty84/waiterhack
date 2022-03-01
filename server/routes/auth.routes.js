@@ -56,7 +56,7 @@ router.post('/signup', (req, res, next) => {
 
 
 
-router.post('/login', (req, res, next) => {
+router.post('/loginRestaurant', (req, res, next) => {
     const { restaurant, password } = req.body;
 
     if (restaurant === '' || password === '') {
@@ -96,6 +96,9 @@ router.post('/login', (req, res, next) => {
             res.status(500).json({ message: "Internal Server Error" })
         })
 })
+
+
+
 
 
 
