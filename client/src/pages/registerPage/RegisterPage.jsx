@@ -1,6 +1,6 @@
 import { FormControl, Input, InputLabel, FormHelperText } from '@mui/material'
 import { Col, Row } from 'react-bootstrap'
-import RegisterRestaurant from '../../components/registerRestaurant.jsx/RegisterRestaurant'
+import RegisterRestaurant from '../../components/registerRestaurant/RegisterRestaurant'
 import "../registerPage/RegisterPage.css"
 
 
