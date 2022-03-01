@@ -94,7 +94,7 @@ router.post("/create-product", (req, res) => {
 
 // Delete Product
 
-router.post("/delete-product", (req, res) => {
+router.delete("/delete-product", (req, res) => {
 
     const { _id } = req.body
     console.log(req.body)
@@ -140,7 +140,7 @@ router.post("/send-order", (req, res) => {
 
 // edit order
 
-router.post("/edit-order", (req, res) => {
+router.put("/edit-order", (req, res) => {
 
     const { id } = req.body
     const order = req.body
@@ -175,7 +175,7 @@ router.post("/accept-order", (req, res) => {
 
 // delete order
 
-router.post("/delete-order", (req, res) => {
+router.delete("/delete-order", (req, res) => {
 
     const { id } = req.body
 
@@ -191,7 +191,7 @@ router.post("/delete-order", (req, res) => {
 
 // delete total
 
-router.post("/delete-total", (req, res) => {
+router.delete("/delete-total", (req, res) => {
 
     const { id } = req.body
 

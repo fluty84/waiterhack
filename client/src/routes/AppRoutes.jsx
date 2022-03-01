@@ -1,5 +1,5 @@
 import IndexPage from "../pages/IndexPage/IndexPage";
-import RegisterPage from "../pages/registerPage/RegisterPage";
+import RegisterPage from "../pages/RegisterPage";
 
 import { Routes, Route } from 'react-router-dom'
 
@@ -9,8 +9,8 @@ const AppRoutes = () => {
   return (<>
   
     <Routes>
-      <Route path="/" element={<IndexPage></IndexPage>}/>
-      <Route path="/restaurante/registro" element={<RegisterPage></RegisterPage>}></Route>
+      <Route path="/" element={<IndexPage />}/>
+      <Route path="/restaurante/registro" element={<RegisterPage/>}></Route>
     </Routes>
     </>
   );

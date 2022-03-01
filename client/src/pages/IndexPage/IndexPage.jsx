@@ -1,11 +1,11 @@
 
 
-// import LoginForm from "../../components/login";
+import LoginForm from "../../components/login/login";
 
 const IndexPage = () => {
 
     return(<>
-{/* <LoginForm /> */}
+<LoginForm />
 <h1>funciona</h1>
 </>
     )

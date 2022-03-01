@@ -1,0 +1,9 @@
+#login-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+#login-form > form {
+  width: 30%;
+}
