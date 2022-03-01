@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const Restaurant = require('../models/Restaurant.model')
 const Table = require('../models/Table.model')
+const {isAuthenticated} = require('../middlewares/jwt.middleware')
 
 
 
@@ -104,7 +105,9 @@ router.post('/loginTable', (req, res, next ) => {
 })
 
 
-
+router.get('/verify', isAuthenticated, (req, res, next) => {
+    res.status(200).json(req.payload)
+})
 
 
 

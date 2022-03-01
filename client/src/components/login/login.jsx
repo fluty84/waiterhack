@@ -3,6 +3,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import "../login/login.css"
 import TextField from '@mui/material/TextField';
+import authService from "../../services/auth.services";
+import { AuthContext } from './../../context/auth.context'
+import { useNavigate } from "react-router-dom";
 
 
 const LoginPage = () => {
@@ -12,6 +15,13 @@ const LoginPage = () => {
     password: ""
        
     })
+
+
+    //  const { setShowMessage, setMessageInfo } = useContext(MessageContext)
+    const { storeToken, authenticateUser } = useContext(AuthContext)
+
+
+        const navigate = useNavigate()
   
 
     const {restaurant, password} = loginForm
@@ -24,10 +34,28 @@ const LoginPage = () => {
         })
     }
 
+
+        function handleSubmit(e) {
+ 
+        e.preventDefault()
+
+        authService
+            .login(loginForm)
+            .then(({ data }) => {
+                //console.log("JWT token", data.authToken)
+                storeToken(data.authToken)
+                authenticateUser()
+                // setShowMessage(true)
+                // setMessageInfo({ title: 'Éxito', desc: 'Sesión iniciada correctamente' })
+                navigate('/')
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
     <div id="login-form">
      
-<Form>
+<Form onSubmit={handleSubmit}>
   <Form.Group className="mb-3" controlId="formBasicEmail">
      <TextField
         id="outlined-required-input"

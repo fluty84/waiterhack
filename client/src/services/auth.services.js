@@ -1,12 +1,10 @@
 import axios from "axios"
 
-class RestaurantService {
+class AuthService {
 
     constructor() {
         this.api = axios.create({
-
             baseURL: 'http://localhost:5005/api'
-
         })
 
             this.api.interceptors.request.use((config) => {
@@ -14,24 +12,24 @@ class RestaurantService {
             const storedToken = localStorage.getItem("authToken");
 
             if (storedToken) {
+
                 config.headers = { Authorization: `Bearer ${storedToken}` }
             }
 
             return config
-
+            
             })
     }
 
-    
-    saveRestaurant = restaurant => {
-        return this.api.post('/create', restaurant)
+   verify(token) {
+        return this.api.get('/auth/verify', { headers: { Authorization: `Bearer ${token}` } })
     }
-
-    verify(token) {
-        return this.api.get('/verify', { headers: { Authorization: `Bearer ${token}` } })
+    
+    login = user => {
+        return this.api.post('/auth/loginRestaurant', user)
     }
 }
 
-const restaurantService = new RestaurantService()
+const authService = new AuthService()
 
-export default restaurantService
+export default authService
