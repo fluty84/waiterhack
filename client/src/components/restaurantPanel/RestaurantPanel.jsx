@@ -1,5 +1,5 @@
 import CreateMenu from "../createMenu/CreateMenu"
-import CreateTabel from "../createTable/CreateTable"
+import CreateTable from "../createTable/CreateTable"
 
 
 
