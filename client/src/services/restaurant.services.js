@@ -1,37 +1,37 @@
-import axios from "axios"
+import axios from "axios";
 
 class RestaurantService {
+  constructor() {
+    this.api = axios.create({
+      baseURL: "http://localhost:5005/api",
+    });
 
-    constructor() {
-        this.api = axios.create({
+    this.api.interceptors.request.use((config) => {
+      const storedToken = localStorage.getItem("authToken");
 
-            baseURL: 'http://localhost:5005/api'
+      if (storedToken) {
+        config.headers = { Authorization: `Bearer ${storedToken}` };
+      }
 
-        })
+      return config;
+    });
+  }
 
-            this.api.interceptors.request.use((config) => {
+  saveRestaurant = (restaurant) => {
+    return this.api.post("/create", restaurant);
+  };
 
-            const storedToken = localStorage.getItem("authToken");
+  createTable = (table) => {
+    return this.api.post("/create-table", table);
+  };
 
-            if (storedToken) {
-                config.headers = { Authorization: `Bearer ${storedToken}` }
-            }
-
-            return config
-
-            })
-    }
-
-    
-    saveRestaurant = restaurant => {
-        return this.api.post('/create', restaurant)
-    }
-
-    verify(token) {
-        return this.api.get('/verify', { headers: { Authorization: `Bearer ${token}` } })
-    }
+  verify(token) {
+    return this.api.get("/verify", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
 }
 
-const restaurantService = new RestaurantService()
+const restaurantService = new RestaurantService();
 
-export default restaurantService
+export default restaurantService;

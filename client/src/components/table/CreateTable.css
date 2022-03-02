@@ -1,0 +1,13 @@
+#createTableForm {
+  width: 33%;
+  padding: 20px;
+}
+
+#createTableContainer {
+  display: flex;
+  justify-content: center;
+}
+
+#createTableForm > div {
+  padding: 50px;
+}
