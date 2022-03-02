@@ -1,12 +1,12 @@
 
-
 import LoginForm from "../../components/login/login";
+import RestaurantPanel from "../../components/restaurantPanel/RestaurantPanel";
 
 const IndexPage = () => {
 
     return(<>
 <LoginForm />
-<h1>funciona</h1>
+<RestaurantPanel></RestaurantPanel>
 </>
     )
 }
