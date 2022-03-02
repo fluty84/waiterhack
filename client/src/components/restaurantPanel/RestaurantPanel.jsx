@@ -1,17 +1,22 @@
 import CreateMenu from "../createMenu/CreateMenu"
-import CreateTable from "../createTable/CreateTable"
+import CreateTable from "../table/CreateTable"
+import { AuthContext } from "../../context/auth.context";
+import { useContext } from "react";
+
 
 
 
 
 const RestaurantPanel = () => {
+    const value = useContext(AuthContext)
 
-    return(
+    return (
         <>
-        
-        <CreateTable></CreateTable>
-        <CreateMenu></CreateMenu>
-        
+
+
+            <CreateTable></CreateTable>
+            <CreateMenu></CreateMenu>
+
         </>
     )
 }
