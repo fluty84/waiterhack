@@ -4,15 +4,16 @@ import restaurantService from "../../services/restaurant.services";
 
 import("./MenuList.css");
 
-const MenuList = (props) => {
+const MenuList = ({ newProduct }) => {
+  console.log(useContext(AuthContext));
   const { user } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState([props.isUpdated]);
-  if (props.isUpdated === true) {
-    setNewProduct(props.isUpdated);
-  }
 
-  useEffect(async () => {
+  useEffect(() => {
+    loadMenu();
+  }, []);
+
+  useEffect(() => {
     loadMenu();
   }, [newProduct]);
 
@@ -26,14 +27,11 @@ const MenuList = (props) => {
   return (
     <>
       <ul>
-        {" "}
         Lista de productos
         {products.map((product) => {
           return (
-            <li>
-              {" "}
+            <li key={product._id}>
               <p>{product.name}</p> {product.price}
-              <input type="number"></input>
             </li>
           );
         })}

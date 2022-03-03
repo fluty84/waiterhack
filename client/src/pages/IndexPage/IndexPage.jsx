@@ -12,7 +12,7 @@ const IndexPage = () => {
     <>
       {value.user ? (
         <>
-          {/* <RestaurantPanel></RestaurantPanel>{" "} */}
+          <RestaurantPanel></RestaurantPanel>
           <CreateOrder></CreateOrder>
         </>
       ) : (

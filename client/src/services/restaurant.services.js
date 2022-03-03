@@ -29,8 +29,6 @@ class RestaurantService {
     return this.api.post("/create-table", table);
   };
 
-  
-
   verify(token) {
     return this.api.get("/verify", {
       headers: { Authorization: `Bearer ${token}` },

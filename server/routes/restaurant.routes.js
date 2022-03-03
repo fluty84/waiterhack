@@ -10,7 +10,7 @@ const saltRounds = 10;
 // Get one restaurant
 router.get("/restaurant/:id", (req, res) => {
   const { id } = req.params;
-  console.log(id);
+
   Restaurant.findById(id)
     .populate("menu")
     .then((response) => res.json(response))
@@ -94,7 +94,6 @@ router.post("/create-product", (req, res) => {
 
 router.delete("/delete-product", (req, res) => {
   const { _id } = req.body;
-  console.log(req.body);
 
   Product.findByIdAndDelete(_id)
     .then(() => console.log("deleted"))
@@ -105,7 +104,10 @@ router.delete("/delete-product", (req, res) => {
 // create table
 
 router.post("/create-table", (req, res) => {
+  console.log(req.body, "holaaa");
   const { password, customer, restaurantId } = req.body;
+
+  console.log("id del restaurante", restaurantId);
 
   Table.create({ restaurantId })
     .then((table) => {
