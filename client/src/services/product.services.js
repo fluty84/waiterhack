@@ -1,4 +1,7 @@
 import axios from "axios"
+import { useContext } from "react"
+import { AuthContext } from "../context/auth.context"
+
 
 class ProductService {
 
@@ -25,6 +28,13 @@ class ProductService {
 
     saveProduct = product => {
         return this.api.post('/create-product', product)
+    }
+
+    getAll = () => {
+
+        const { user } = useContext(AuthContext)
+
+        return this.api.post('/restaurant/:id', user)
     }
 
     verify(token) {

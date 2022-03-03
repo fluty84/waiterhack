@@ -11,8 +11,7 @@ const productSchema = new Schema({
     category: [String],
     allergens: [String],
     restaurantId: [{ type: Schema.Types.ObjectId, ref: 'Restaurant' }],
-    img: String
+    imageUrl: String
 });
-
 
 module.exports = model("Product", productSchema)

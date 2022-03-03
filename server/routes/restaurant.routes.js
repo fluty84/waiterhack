@@ -77,10 +77,10 @@ router.post("/create", (req, res) => {
 
 router.post("/create-product", (req, res) => {
 
-    const { name, price, category, allergens, restaurantId, img } = req.body
+    const { name, price, category, allergens, restaurantId, imageUrl } = req.body
 
     Product
-        .create({ name, price, category, allergens, restaurantId, img })
+        .create({ name, price, category, allergens, restaurantId, imageUrl })
         .then((product) => {
 
             return Restaurant.findByIdAndUpdate(restaurantId, { $push: { menu: product } })
@@ -107,7 +107,15 @@ router.delete("/delete-product", (req, res) => {
 
 })
 
+// Get Restaurant's products
 
+router.get("/menu", (req, res) => {
+    
+    console.log(req.body)
+
+   
+
+})
 
 // create table
 
