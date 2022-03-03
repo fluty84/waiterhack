@@ -10,7 +10,7 @@ const saltRounds = 10;
 // Get one restaurant
 router.get("/restaurant/:id", (req, res) => {
   const { id } = req.params;
-  
+
   Restaurant.findById(id)
     .populate("menu")
     .then((response) => res.json(response))
@@ -79,15 +79,15 @@ router.post("/create", (req, res) => {
 router.post("/create-product", (req, res) => {
   const { name, price, category, allergens, restaurantId, imageUrl } = req.body;
 
-    Product
-        .create({ name, price, category, allergens, restaurantId, imageUrl })
-        .then((product) => {
+  Product
+    .create({ name, price, category, allergens, restaurantId, imageUrl })
+    .then((product) => {
 
-            return Restaurant.findByIdAndUpdate(restaurantId, { $push: { menu: product } })
-        })
+      return Restaurant.findByIdAndUpdate(restaurantId, { $push: { menu: product } })
+    })
 
-        .then((result) => res.status(201).json({ result }))
-        .catch(err => console.log(err))
+    .then((result) => res.status(201).json({ result }))
+    .catch(err => console.log(err))
 
 })
 
@@ -95,7 +95,7 @@ router.post("/create-product", (req, res) => {
 
 router.delete("/delete-product", (req, res) => {
   const { _id } = req.body;
-  
+
 
   Product.findByIdAndDelete(_id)
     .then(() => console.log("deleted"))
@@ -106,7 +106,12 @@ router.delete("/delete-product", (req, res) => {
 // create table
 
 router.post("/create-table", (req, res) => {
+
+
+  console.log(req.body, "holaaa")
   const { password, customer, restaurantId } = req.body;
+
+  console.log('id del restaurante', restaurantId)
 
   Table.create({ restaurantId })
     .then((table) => {

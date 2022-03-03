@@ -32,6 +32,7 @@ class RestaurantService {
     }
 
     createTable = (table) => {
+        console.log('la mesa es',table)
         return this.api.post("/create-table", table);
     };
 

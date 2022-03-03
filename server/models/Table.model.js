@@ -6,6 +6,7 @@ const tableSchema = new Schema({
   total: [{}],
   restaurantId: [
     {
+      required:true,
       type: Schema.Types.ObjectId,
       ref: "Restaurant",
     },

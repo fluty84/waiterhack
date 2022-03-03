@@ -41,7 +41,7 @@ const MenuList = ({newProduct}) => {
             <ul> Lista de productos
                 {
                     products.map(product => {
-                        return (<li> <p>{product.name}</p> {product.price}</li>)
+                        return (<li key={product._id}> <p>{product.name}</p> {product.price}</li>)
                     })
                 }
             </ul>
