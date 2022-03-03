@@ -24,6 +24,10 @@ const CreateTable = (props) => {
   }, [value.user]);
 
   const handleClick = (arg) => {
+    if (table.numberOfTables === 0 && arg === -1) {
+      arg = 0;
+    }
+
     setTable({
       ...table,
       numberOfTables: parseInt(table.numberOfTables) + parseInt(arg),
@@ -31,13 +35,14 @@ const CreateTable = (props) => {
   };
 
   const handleChange = (arg) => {
-    console.log(arg.target);
+    console.log(arg.target.value);
+    if (arg.target.value < 0 || arg.target.value > 100) {
+      arg.target.value = 0;
+    }
     setTable({
       ...table,
       numberOfTables: arg.target.value,
     });
-
-    console.log(table.numberOfTables);
   };
 
   const handleSubmit = (e) => {

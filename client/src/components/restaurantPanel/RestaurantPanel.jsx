@@ -8,6 +8,7 @@ const RestaurantPanel = () => {
 
   return (
     <>
+      <h1>restaurant PANEL</h1>
       <CreateTable tableNumbers={value}></CreateTable>
       <CreateMenu></CreateMenu>
     </>

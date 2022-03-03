@@ -1,47 +1,50 @@
-import axios from "axios"
-import { useContext } from "react"
-import { AuthContext } from "../context/auth.context"
-
+import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../context/auth.context";
 
 class ProductService {
+  constructor() {
+    this.api = axios.create({
+      baseURL: "http://localhost:5005/api",
+    });
 
-    constructor() {
-        this.api = axios.create({
+    this.api.interceptors.request.use((config) => {
+      const storedToken = localStorage.getItem("authToken");
 
-            baseURL: 'http://localhost:5005/api'
+      if (storedToken) {
+        config.headers = { Authorization: `Bearer ${storedToken}` };
+      }
 
-        })
+      return config;
+    });
+  }
 
-        this.api.interceptors.request.use((config) => {
+  saveProduct = (product) => {
+    return this.api.post("/create-product", product);
+  };
 
-            const storedToken = localStorage.getItem("authToken");
+  getAll = () => {
+    const { user } = useContext(AuthContext);
 
-            if (storedToken) {
-                config.headers = { Authorization: `Bearer ${storedToken}` }
-            }
+    return this.api.post("/restaurant/:id", user);
+  };
 
-            return config
+  createOrder = (order) => {
+    return this.api.post("/send-order", order);
+  };
 
-        })
-    }
+  displayOrder = (id) => {
+    const { _id } = id;
+    return this.api.get(`/display-order/${_id}`);
+  };
 
-
-    saveProduct = product => {
-        return this.api.post('/create-product', product)
-    }
-
-    getAll = () => {
-
-        const { user } = useContext(AuthContext)
-
-        return this.api.post('/restaurant/:id', user)
-    }
-
-    verify(token) {
-        return this.api.get('/verify', { headers: { Authorization: `Bearer ${token}` } })
-    }
+  verify(token) {
+    return this.api.get("/verify", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
 }
 
-const productService = new ProductService()
+const productService = new ProductService();
 
-export default productService
+export default productService;

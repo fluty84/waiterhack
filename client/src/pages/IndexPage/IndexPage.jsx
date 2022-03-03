@@ -2,6 +2,8 @@ import LoginForm from "../../components/login/login";
 import RestaurantPanel from "../../components/restaurantPanel/RestaurantPanel";
 import { AuthContext } from "../../context/auth.context";
 import { useState, useContext, useEffect } from "react";
+import CreateOrder from "../../components/CreateOrder/CreateOrder";
+import Basket from "../CustomerPages/Basket";
 
 const IndexPage = () => {
   const value = useContext(AuthContext);
@@ -10,7 +12,8 @@ const IndexPage = () => {
     <>
       {value.user ? (
         <>
-          <RestaurantPanel></RestaurantPanel>{" "}
+          {/* <RestaurantPanel></RestaurantPanel>{" "} */}
+          <CreateOrder></CreateOrder>
         </>
       ) : (
         <LoginForm />

@@ -77,19 +77,18 @@ router.post("/create", (req, res) => {
 // Create Product
 
 router.post("/create-product", (req, res) => {
-  const { name, price, category, allergens, restaurantId, img } = req.body;
+  const { name, price, category, allergens, restaurantId, imageUrl } = req.body;
 
-    Product
-        .create({ name, price, category, allergens, restaurantId, imageUrl })
-        .then((product) => {
+  Product.create({ name, price, category, allergens, restaurantId, imageUrl })
+    .then((product) => {
+      return Restaurant.findByIdAndUpdate(restaurantId, {
+        $push: { menu: product },
+      });
+    })
 
-            return Restaurant.findByIdAndUpdate(restaurantId, { $push: { menu: product } })
-        })
-
-        .then((result) => res.status(201).json({ result }))
-        .catch(err => console.log(err))
-
-})
+    .then((result) => res.status(201).json({ result }))
+    .catch((err) => console.log(err));
+});
 
 // Delete Product
 
@@ -128,6 +127,16 @@ router.post("/send-order", (req, res) => {
   Table.findByIdAndUpdate(id, { $push: { currentOrder: order } })
     .then((result) => res.status(201).json({ result }))
     .catch((err) => console.log(err));
+});
+
+//display order
+
+router.get("/display-order/:id", (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  Table.findById(id)
+    .then((result) => res.status(201).json({ result }))
+    .catch((e) => console.log(e));
 });
 
 // edit order

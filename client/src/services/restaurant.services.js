@@ -1,46 +1,41 @@
 import axios from "axios";
 
 class RestaurantService {
+  constructor() {
+    this.api = axios.create({
+      baseURL: "http://localhost:5005/api",
+    });
 
-    constructor() {
-        this.api = axios.create({
+    this.api.interceptors.request.use((config) => {
+      const storedToken = localStorage.getItem("authToken");
 
-            baseURL: 'http://localhost:5005/api'
+      if (storedToken) {
+        config.headers = { Authorization: `Bearer ${storedToken}` };
+      }
 
-        })
+      return config;
+    });
+  }
 
-            this.api.interceptors.request.use((config) => {
+  getRestaurant = (user) => {
+    return this.api.get(`/restaurant/${user._id}`);
+  };
 
-            const storedToken = localStorage.getItem("authToken");
+  saveRestaurant = (restaurant) => {
+    return this.api.post("/create", restaurant);
+  };
 
-            if (storedToken) {
-                config.headers = { Authorization: `Bearer ${storedToken}` }
-            }
+  createTable = (table) => {
+    return this.api.post("/create-table", table);
+  };
 
-            return config
+  
 
-            })
-    }
-
-    getRestaurant = (user) => {
-
-        console.log('el usuario es ', user)
-
-        return this.api.get(`/restaurant/${user._id}`)
-    }
-    
-    saveRestaurant = restaurant => {
-        return this.api.post('/create', restaurant)
-    }
-
-    createTable = (table) => {
-        return this.api.post("/create-table", table);
-    };
-
-    verify(token) {
-        return this.api.get('/verify', { headers: { Authorization: `Bearer ${token}` } })
-    }
- 
+  verify(token) {
+    return this.api.get("/verify", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
 }
 
 const restaurantService = new RestaurantService();
