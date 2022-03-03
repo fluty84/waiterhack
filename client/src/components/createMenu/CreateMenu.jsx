@@ -2,6 +2,7 @@ import { FormControl, Input, InputLabel, FormHelperText, Container, Grid, TextFi
 import { useContext, useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { AuthContext } from '../../context/auth.context'
+import { useNavigate } from 'react-router-dom'
 import productService from '../../services/product.services'
 import uploadService from '../../services/upload.service'
 import MenuList from '../menuList/MenuList'
@@ -10,27 +11,31 @@ import('./CreateMenu.css')
 
 const CreateMenu = () => {
 
-    const {isLoggedIn} = useContext(AuthContext)
+    const { isLoggedIn } = useContext(AuthContext)
 
     const { user } = useContext(AuthContext)
 
-    console.log('user is logged',isLoggedIn, user._id)
+    console.log('user is logged', isLoggedIn, user._id)
 
-    
+
     const [productData, setproductData] = useState(
         {
             name: '',
             price: '',
             category: '',
             allergens: '',
-            restaurantId: user._id ,
+            restaurantId: user._id,
             imageUrl: ''
         }
     )
 
     const [loadingImage, setLoadingImage] = useState(false)
 
+    const [newProduct, setNewProduct] = useState(false)
+
     const { name, price, category, allergens, restaurantId, imageUrl } = productData
+
+    const navigate = useNavigate()
 
     const handleInputChange = e => {
 
@@ -45,6 +50,8 @@ const CreateMenu = () => {
         })
     }
 
+    const toggleNew = () => !newProduct ? setNewProduct(true) : setNewProduct(false)
+
     const handleSubmit = e => {
         e.preventDefault()
 
@@ -54,9 +61,8 @@ const CreateMenu = () => {
             .saveProduct(productData)
             .then(({ data }) => {
                 console.log(data)
-
+                toggleNew()
             })
-
             .catch(err => console.log(err))
     }
 
@@ -79,11 +85,11 @@ const CreateMenu = () => {
 
     return (
 
-        
+
 
         <Container maxWidth='sm'>
 
-            <MenuList></MenuList>
+            <MenuList newProduct={newProduct}></MenuList>
 
             <h4>Nuevo producto </h4>
 
@@ -110,12 +116,12 @@ const CreateMenu = () => {
 
 
                 <TextField className='uploadFile'
-                    
+
                     className="outlined-required"
                     label="Imagen"
                     name="restaurantId"
                     type="file"
-                    
+
                     onChange={uploadProductImage}
                 />
 
@@ -152,7 +158,7 @@ const CreateMenu = () => {
 
 
                 <Button variant="outlined" size="small" type='submit' disabled={loadingImage}  >{loadingImage ? 'Espere...' : 'Añadir producto'}
-                    
+
                 </Button>
             </Form>
         </Container>

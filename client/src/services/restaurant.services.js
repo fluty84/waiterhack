@@ -24,8 +24,6 @@ class RestaurantService {
 
     getRestaurant = (user) => {
 
-        console.log('el usuario es ', user)
-
         return this.api.get(`/restaurant/${user._id}`)
     }
     
