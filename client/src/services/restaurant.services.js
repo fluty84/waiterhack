@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 class RestaurantService {
 
@@ -33,11 +33,16 @@ class RestaurantService {
         return this.api.post('/create', restaurant)
     }
 
+    createTable = (table) => {
+        return this.api.post("/create-table", table);
+    };
+
     verify(token) {
         return this.api.get('/verify', { headers: { Authorization: `Bearer ${token}` } })
     }
+ 
 }
 
-const restaurantService = new RestaurantService()
+const restaurantService = new RestaurantService();
 
-export default restaurantService
+export default restaurantService;
