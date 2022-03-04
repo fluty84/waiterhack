@@ -3,6 +3,7 @@ const Restaurant = require("../models/Restaurant.model");
 const Product = require("../models/Product.model");
 const Table = require("../models/Table.model");
 const bcrypt = require("bcryptjs");
+const { isAuthenticated } = require("../middlewares/jwt.middleware");
 const router = express.Router();
 
 const saltRounds = 10;
@@ -103,17 +104,22 @@ router.delete("/delete-product", (req, res) => {
 
 // create table
 
-router.post("/create-table", (req, res) => {
-  console.log(req.body, "holaaa");
-  const { password, customer, restaurantId } = req.body;
+router.post("/create-table", isAuthenticated, (req, res) => {
+
+  //const { password, customer } = req.body;
+
+  const restaurantId = req.payload._id 
+
 
   console.log("id del restaurante", restaurantId);
 
-  Table.create({ restaurantId })
+  Table
+    .create({restaurantId})
     .then((table) => {
       return Restaurant.findByIdAndUpdate(restaurantId, {
         $push: { tables: table },
       });
+      
     })
     .then((result) => res.status(201).json({ result }))
     .catch((err) => console.log(err));

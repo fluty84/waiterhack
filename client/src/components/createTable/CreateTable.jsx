@@ -50,7 +50,7 @@ const CreateTable = ({handleClose}) => {
 
     for (let i = 0; i < table.numberOfTables; i++) {
       restaurantService
-        .createTable(table.restaurantId)
+        .createTable()
         .then(()=> close())
         .then((x) => console.log(x));
     }

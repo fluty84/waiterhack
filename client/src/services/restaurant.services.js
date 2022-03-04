@@ -25,8 +25,8 @@ class RestaurantService {
     return this.api.post("/create", restaurant);
   };
 
-  createTable = (table) => {
-    return this.api.post("/create-table", table);
+  createTable = () => {
+    return this.api.post("/create-table");
   };
 
   verify(token) {
