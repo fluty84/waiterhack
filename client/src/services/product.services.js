@@ -34,8 +34,8 @@ class ProductService {
   };
 
   displayOrder = (id) => {
-    const { _id } = id;
-    return this.api.get(`/display-order/${_id}`);
+    console.log("this display is: " + id);
+    return this.api.get(`/${id}/display-order`);
   };
 
   verify(token) {

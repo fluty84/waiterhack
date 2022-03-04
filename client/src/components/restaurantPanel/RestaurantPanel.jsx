@@ -38,7 +38,6 @@ const RestaurantPanel = () => {
             >
               <Box>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Text in a modal
                 </Typography>
                 <CreateTable
                   tableNumbers={value}
@@ -48,7 +47,7 @@ const RestaurantPanel = () => {
             </Modal>
           </Col>
           <Col>
-            <Link to={`/restaurante/${_id}/menu`}>
+            <Link to={`/panel`}>
               <Button variant="outlined">Jornada</Button>
             </Link>
           </Col>

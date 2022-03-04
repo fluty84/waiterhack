@@ -15,10 +15,10 @@ const CreateOrder = (props) => {
   useEffect(() => {
     loadMenu();
   }, []);
-  const a = useParams();
+  const { _id, tableId } = useParams();
   const loadMenu = () => {
     restaurantService
-      .getRestaurant(a)
+      .getRestaurant({ _id })
       .then((response) => setProducts(response.data.menu))
       .catch((err) => console.log(err));
   };
@@ -29,7 +29,7 @@ const CreateOrder = (props) => {
     setOrderForm({
       ...orderForm,
       [name]: value,
-      id: "6220ccf3613038e6933929f5", //TABLE ID
+      id: tableId, //TABLE ID
     });
   };
 
@@ -45,12 +45,12 @@ const CreateOrder = (props) => {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        {" "}
+     
         Lista de productos
         {products.map((product) => {
           return (
             <li key={product._id}>
-              {" "}
+         
               <p>{product.name}</p> {product.price}
               <input
                 type="number"

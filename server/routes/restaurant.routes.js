@@ -105,21 +105,17 @@ router.delete("/delete-product", (req, res) => {
 // create table
 
 router.post("/create-table", isAuthenticated, (req, res) => {
-
   //const { password, customer } = req.body;
 
-  const restaurantId = req.payload._id 
-
+  const restaurantId = req.payload._id;
 
   console.log("id del restaurante", restaurantId);
 
-  Table
-    .create({restaurantId})
+  Table.create({ restaurantId })
     .then((table) => {
       return Restaurant.findByIdAndUpdate(restaurantId, {
         $push: { tables: table },
       });
-      
     })
     .then((result) => res.status(201).json({ result }))
     .catch((err) => console.log(err));
@@ -129,8 +125,9 @@ router.post("/create-table", isAuthenticated, (req, res) => {
 
 router.post("/send-order", (req, res) => {
   const { id } = req.body;
-
+  console.log(id);
   const order = req.body;
+  console.log(order);
 
   Table.findByIdAndUpdate(id, { $push: { currentOrder: order } })
     .then((result) => res.status(201).json({ result }))
@@ -139,10 +136,10 @@ router.post("/send-order", (req, res) => {
 
 //display order
 
-router.get("/display-order/:id", (req, res) => {
-  const { id } = req.params;
-  console.log(id);
-  Table.findById(id)
+router.get("/:tableId/display-order", (req, res) => {
+  console.log(req.params);
+
+  Table.findById(req.params.tableId)
     .then((result) => res.status(201).json({ result }))
     .catch((e) => console.log(e));
 });
