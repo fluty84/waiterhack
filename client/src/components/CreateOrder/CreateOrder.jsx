@@ -6,11 +6,25 @@ import { Form, Button } from "react-bootstrap";
 import productService from "../../services/product.services";
 import { useParams } from "react-router-dom";
 
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:3001");
+
 const CreateOrder = (props) => {
   const [products, setProducts] = useState([]);
   const [productNum, setProductNum] = useState([props.isUpdated]);
-
   const [orderForm, setOrderForm] = useState({});
+
+  const [room, setRoom] = useState("PopinoRooom");
+
+  const [userName, setUsername] = useState("Popino");
+
+  const joinRoom = () => {
+    if (userName !== "" && room !== "") {
+      console.log("click");
+      socket.emit("join_room", room);
+    }
+  };
 
   useEffect(() => {
     loadMenu();
@@ -35,6 +49,7 @@ const CreateOrder = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    joinRoom();
 
     productService
       .createOrder(orderForm)
@@ -45,12 +60,10 @@ const CreateOrder = (props) => {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-     
         Lista de productos
         {products.map((product) => {
           return (
             <li key={product._id}>
-         
               <p>{product.name}</p> {product.price}
               <input
                 type="number"

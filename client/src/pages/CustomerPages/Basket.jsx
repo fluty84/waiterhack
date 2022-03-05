@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom";
 import CreateTable from "../../components/table/CreateTable";
 import productService from "../../services/product.services";
 import restaurantService from "../../services/restaurant.services";
+import io from "socket.io-client"
+
+let ENDPOINT = "http://localhost:5000"
+let socket = io()
+
 
 function Basket() {
   let response = "";
