@@ -21,3 +21,32 @@ Menu => producto
 Pago
 
 
+
+
+
+/// Por hacer///
+
+Basket 
+Quitar botón en table detail de esperando confirmación si está en Table details
+Modificar comanda 
+
+
+TableDetais
+Borrar comanda
+
+Boton generar QR (y ruta para imprimir)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

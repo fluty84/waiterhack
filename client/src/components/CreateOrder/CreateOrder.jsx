@@ -15,16 +15,19 @@ const CreateOrder = (props) => {
   const [productNum, setProductNum] = useState([props.isUpdated]);
   const [orderForm, setOrderForm] = useState({});
 
-  const [room, setRoom] = useState("PopinoRooom");
+  //const [room, setRoom] = useState("PopinoRooom");
 
   const [userName, setUsername] = useState("Popino");
 
   const joinRoom = () => {
-    if (userName !== "" && room !== "") {
+    //if (userName !== "" && room !== "") {
       console.log("click");
-      socket.emit("join_room", room);
-    }
+      socket.emit("join_room", orderForm);
+    
   };
+
+
+
 
   useEffect(() => {
     loadMenu();
@@ -53,7 +56,7 @@ const CreateOrder = (props) => {
 
     productService
       .createOrder(orderForm)
-      .then((x) => console.log(x))
+      .then(() => console.log("producto creado con exito"))
       .catch((e) => console.log(e));
   };
 

@@ -29,6 +29,10 @@ class RestaurantService {
     return this.api.post("/create-table");
   };
 
+  acceptOrder = (id) => {
+    return this.api.post("/accept-order", id);
+  }
+
   verify(token) {
     return this.api.get("/verify", {
       headers: { Authorization: `Bearer ${token}` },

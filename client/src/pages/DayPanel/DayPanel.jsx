@@ -1,47 +1,51 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import restaurantService from "../../services/restaurant.services";
 import mesaOn from "./mesa-on.png";
 import mesaOff from "./mesa-off.png";
-
+import TableDetails from "../../components/TableDetails/TableDetails";
 import io from "socket.io-client";
+import { Box, Button, Modal, Typography } from "@mui/material";
 
 const socket = io.connect("http://localhost:3001");
 
 import("./DayPanel.css");
 
-
-socket.on("join_room", function (msg) {
-  console.log("chat");
-  console.log(msg, 'en dayPanel');
-});
-
-
 const DayPanel = () => {
- 
   const { user } = useContext(AuthContext);
   const [tables, setTables] = useState();
   const [isOrder, setIsOrder] = useState(false);
-  
 
-socket.on("Popinoei", (arg) => {
+  const [open, setOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
 
-console.log(arg, 'mensajeee')
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-})
+  socket.on("join_room", function (msg) {
+    console.log(msg, "en dayPanel");
+    setIsOrder(msg);
+  });
 
   useEffect(() => {
-    loadTables()
-  }, [])
+    loadTables();
+  }, []);
 
-  //   useEffect(() => {
-  //     setIsUser(true);
-  //   }, [user]);
+  const didMount = useRef(false);
+
+  useEffect(() => {
+    if (didMount.current) {
+      console.log("OIDO COCINA");
+      loadTables();
+    } else {
+      didMount.current = true;
+    }
+  }, [isOrder]);
 
   const loadTables = () => {
-    !user&&console.log("el puto id", user);
+    !user && console.log("el puto id", user);
     restaurantService
       .getRestaurant(user)
       .then((response) => setTables(response.data.tables))
@@ -53,18 +57,41 @@ console.log(arg, 'mensajeee')
       <h1>Jornada </h1>
       <Row className="justify-content-md-center">
         {tables?.map((table, idx) => {
-          console.log(table);
           return (
             <Col md={3} className="mesa">
-              <h1>Mesa {idx + 1}</h1>
-              <Link to={`/restaurante/${user._id}/panel/${table}`}>
-                {" "}
-                <img src={isOrder ? mesaOn : mesaOff} alt="" />{" "}
-              </Link>
+              <p>Mesa número {idx}</p>
+              <input
+                type="image"
+                alt="mesa"
+                onClick={() => {
+                  setModalData(table);
+                  handleOpen();
+                }}
+                src={!table.currentOrder.length ? mesaOff : mesaOn}
+              ></input>
             </Col>
           );
         })}
       </Row>
+      ç
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+          ></Typography>
+          <TableDetails
+            order={modalData}
+            handleClose={handleClose}
+          ></TableDetails>
+        </Box>
+      </Modal>
     </>
   );
 };

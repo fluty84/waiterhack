@@ -14,6 +14,7 @@ router.get("/restaurant/:id", (req, res) => {
 
   Restaurant.findById(id)
     .populate("menu")
+    .populate("tables")
     .then((response) => res.json(response))
     .catch((err) => console.log(err));
 });
@@ -158,7 +159,10 @@ router.put("/edit-order", (req, res) => {
 
 // accept order
 router.post("/accept-order", (req, res) => {
+  
   const { id } = req.body;
+
+  console.log()
 
   Table.findById(id)
     .then((tab) => {

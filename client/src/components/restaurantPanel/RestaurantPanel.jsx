@@ -14,8 +14,6 @@ const RestaurantPanel = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  console.log(_id);
-
   return (
     <>
       <Row className="justify-content-md-center mt-5">
