@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const tableSchema = new Schema({
   customer: String,
   currentOrder: [{}],
-  total: [{}],
+  total: [{}], 
   restaurantId: [
     {
       required:true,

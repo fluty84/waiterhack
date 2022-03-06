@@ -41,10 +41,12 @@
 | POST | `/api/send-order` | Create order |✓ |
 | PUT | `/api/edit-order` | Edit order |✓ |
 | POST | `/api/accept-order` | Accept order |✓ |
-| DELETE | `/api/delete-order` | Delete order |✓ |
+| POST | `/api/delete-order` | Delete order |✓ |
 | DELETE | `/api/delete-total` | Delete total |✓ |
 | PUT | `/api/update-total` | Update total |✓ |
 | POST | `/api/auth/loginRestaurant` | Restaurant Log-in |✓ |
 | POST | `/api/auth/loginTable` | Table Log-in |✓ |
 
 |
+
+[texto a mostrar](https://disney.com)

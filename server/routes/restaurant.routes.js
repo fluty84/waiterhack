@@ -9,7 +9,7 @@ const router = express.Router();
 const saltRounds = 10;
 
 // Get one restaurant
-router.get("/restaurant/:id", (req, res) => {
+router.get("/restaurant/:id", isAuthenticated, (req, res) => {
   const { id } = req.params;
 
   Restaurant.findById(id)
@@ -162,8 +162,6 @@ router.post("/accept-order", (req, res) => {
   
   const { id } = req.body;
 
-  console.log()
-
   Table.findById(id)
     .then((tab) => {
       const currentOrderCopy = [...tab.currentOrder];
@@ -178,8 +176,9 @@ router.post("/accept-order", (req, res) => {
 
 // delete order
 
-router.delete("/delete-order", (req, res) => {
+router.post("/delete-order", (req, res) => {
   const { id } = req.body;
+  console.log('estoy en delete order y id de la mesa es', req.body)
 
   Table.findByIdAndUpdate(id, { currentOrder: [] })
     .then((elm) => {

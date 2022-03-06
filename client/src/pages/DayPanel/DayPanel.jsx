@@ -17,6 +17,7 @@ const DayPanel = () => {
   const { user } = useContext(AuthContext);
   const [tables, setTables] = useState();
   const [isOrder, setIsOrder] = useState(false);
+  const [tableNumber, setTableNumber] = useState(0)
 
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
@@ -31,7 +32,7 @@ const DayPanel = () => {
 
   useEffect(() => {
     loadTables();
-  }, []);
+  }, [user]);
 
   const didMount = useRef(false);
 
@@ -58,13 +59,15 @@ const DayPanel = () => {
       <Row className="justify-content-md-center">
         {tables?.map((table, idx) => {
           return (
-            <Col md={3} className="mesa">
-              <p>Mesa número {idx}</p>
+            <Col md={3} className="mesa" key={idx}>
+              <p>Mesa número {idx+1}</p>
               <input
                 type="image"
                 alt="mesa"
                 onClick={() => {
                   setModalData(table);
+                  setTableNumber(idx+1)
+                  console.log('click o table',tableNumber)
                   handleOpen();
                 }}
                 src={!table.currentOrder.length ? mesaOff : mesaOn}
@@ -73,7 +76,7 @@ const DayPanel = () => {
           );
         })}
       </Row>
-      ç
+      
       <Modal
         open={open}
         onClose={handleClose}
@@ -88,6 +91,7 @@ const DayPanel = () => {
           ></Typography>
           <TableDetails
             order={modalData}
+            number={tableNumber}
             handleClose={handleClose}
           ></TableDetails>
         </Box>

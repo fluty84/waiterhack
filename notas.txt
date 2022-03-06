@@ -23,7 +23,6 @@ Pago
 
 
 
-
 /// Por hacer///
 
 Basket 
@@ -32,18 +31,40 @@ Modificar comanda
 
 
 TableDetais
-Borrar comanda
-
-Boton generar QR (y ruta para imprimir)
 
 
+Vaciar mesa
+
+Direcciones dummy: 
+
+http://localhost:3000/6220f66aeca2aa71f20c76d2/6224c318224961b353791920/customer-order
+
+
+http://localhost:3000/6220f66aeca2aa71f20c76d2/6224c318224961b353791920/vista-cliente
+
+
+//Mejorar codigo//
+
+en Basket
+
+Cambia el nombre de la funcion filter y si puedes rompela en dos
+
+
+// MODELO TABLE
+
+igual llamarlo handledOrders?
+
+Lista de productos, negativooooo
+
+
+//pritier quitar punto y coma, poner comillas simples a todo
 
 
 
 
 
 
-
+// cancelar order antes de ser aceptada por el camarero?? //modal intermedia con resumen
 
 
 

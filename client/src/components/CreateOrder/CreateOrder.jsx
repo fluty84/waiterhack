@@ -15,12 +15,10 @@ const CreateOrder = (props) => {
   const [productNum, setProductNum] = useState([props.isUpdated]);
   const [orderForm, setOrderForm] = useState({});
 
-  //const [room, setRoom] = useState("PopinoRooom");
-
   const [userName, setUsername] = useState("Popino");
 
   const joinRoom = () => {
-    //if (userName !== "" && room !== "") {
+    
       console.log("click");
       socket.emit("join_room", orderForm);
     

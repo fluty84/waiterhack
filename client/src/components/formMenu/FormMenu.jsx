@@ -90,7 +90,7 @@ const uploadProductImage = e => {
 
                 <TextField className='textField'
                     required
-                    className="outlined-required"
+                    //className="outlined-required"
                     label="Nombre del producto"
                     name="name"
                     type="text"
@@ -99,7 +99,7 @@ const uploadProductImage = e => {
                 />
                 <TextField className='textField'
                     required
-                    className="outlined-required"
+                    //className="outlined-required"
                     label="Precio"
                     name="price"
                     type="number"
@@ -110,7 +110,7 @@ const uploadProductImage = e => {
 
                 <TextField className='uploadFile'
 
-                    className="outlined-required"
+                    //className="outlined-required"
                     label="Imagen"
                     name="restaurantId"
                     type="file"
@@ -150,7 +150,7 @@ const uploadProductImage = e => {
                 </Select>
 
 
-                <Button variant="outlined" size="small" type='submit' disabled={loadingImage}  >{loadingImage ? 'Espere...' : 'Añadir producto'}
+                <Button variant="outlined" size="small" type='submit' disabled={loadingImage}  >{loadingImage ? 'Cargando imagen' : 'Añadir producto'}
 
                 </Button>
             </Form>

@@ -2,16 +2,20 @@ import { Row, Col } from "react-bootstrap";
 import Basket from "../../pages/CustomerPages/Basket";
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
-import { Button } from "@mui/material";
+import { Button, ButtonGroup, Link } from "@mui/material";
 import restaurantService from "../../services/restaurant.services";
 import { io } from "socket.io-client";
+import Qr from "../qr/Qr";
+import QrPrint from "../../pages/qrPrint/QrPrint";
+
+
+
 
 const socket = io.connect('http://localhost:3001')
 
 import("./TableDetails.css");
 
-const TableDetails = ({ order }) => {
-  console.log(order, "order");
+const TableDetails = ({ order, handleClose, number }) => {
   const value = useContext(AuthContext);
   const { _id } = value.user;
 
@@ -31,25 +35,40 @@ const TableDetails = ({ order }) => {
         !tableId.length && tableId.push(item[1]);
       }
     });
-    console.log({tableId:tableId[0]}, "tableID");
+    console.log({ tableId: tableId[0] }, "tableID");
   });
 
   const accept = () => {
 
-    socket.emit('join_room', true )
+    socket.emit('join_room', true)
 
     console.log('ACEPTADO')
     restaurantService
-      .acceptOrder({id:tableId[0]})
+      .acceptOrder({ id: tableId[0] })
       .then(({ data }) => {
-      console.log(data)})
+        console.log(data)
+      })
       .catch(err => console.log(err))
-    
+
+  }
+
+  const cancel = () => {
+
+    socket.emit('join_room', 'cancelado')
+
+
+    console.log('cancelado')
+    restaurantService
+      .cancelOrder({ id: tableId[0] })
+      .then(({ data }) => {
+        console.log(data)
+      })
+      .catch(err => console.log(err))
   }
 
   return (
     <div className="order">
-      <h1>This table Details</h1>
+      <h1>Table {number} Details</h1>
       <Row>
         <Col md={6}>
           {newArr.map((item) => {
@@ -62,15 +81,24 @@ const TableDetails = ({ order }) => {
         </Col>
 
         <Col md={6}>
-          <Basket _id={_id} tableId={tableId[0]}></Basket>
-        
-            <Button onClick={accept}>
-              Aceptar pedido
-            </Button>
-       
+          <Basket _id={_id} tableId={tableId[0]} handleClose={handleClose}></Basket>
+
+          <Button onClick={accept}>
+            Aceptar pedido
+          </Button>
+
+          <Button onClick={cancel}>
+            Cancelar Pedido
+          </Button>
+
+          <Button href={`/restaurante/${_id}/panel/${order._id}/qr/${number}`} target="_blank">
+            Imprimir QR
+          </Button>
+          
         </Col>
 
-          
+
+
 
       </Row>
     </div>

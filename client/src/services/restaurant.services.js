@@ -33,6 +33,11 @@ class RestaurantService {
     return this.api.post("/accept-order", id);
   }
 
+  cancelOrder = (id) => {
+    console.log('el id en el servicio es ', id)
+    return this.api.post("/delete-order", id)
+  }
+
   verify(token) {
     return this.api.get("/verify", {
       headers: { Authorization: `Bearer ${token}` },

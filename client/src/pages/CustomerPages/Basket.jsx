@@ -6,6 +6,10 @@ import restaurantService from "../../services/restaurant.services";
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001");
 
+/**
+ * Basket 
+ * @arg props: Object { _id: number, tableId: number }
+ */
 function Basket(props) {
   let response = "";
   let currentOrder = "";
@@ -52,11 +56,11 @@ function Basket(props) {
   function filter() {
     // suma el total de productos
     let newArr = [];
-    orders.forEach((x) => {
-      newArr.push(Object.keys(x).flat());
+    orders.forEach((product) => {
+      newArr.push(Object.keys(product).flat());
     });
     const flatArr = newArr.flat();
-    const uniqueKeys = [...new Set(flatArr)];
+    const uniqueKeys = [...new Set(flatArr)]; 
     const filteredArr = uniqueKeys.filter((x) => {
       return x != "id";
     });
@@ -75,6 +79,7 @@ function Basket(props) {
       });
     });
     cuentaTotal = { ...cuenta };
+    console.log('la cuenta es',cuentaTotal)
   }
 
   function calculateTotal() {
@@ -113,7 +118,7 @@ function Basket(props) {
   return (
     <>
       {changes &&
-        Object.entries(ticket).map((key) => (
+        Object.entries(ticket).map((key, idx) => (
           <p>
             {key[0]} {key[1]}
           </p>
