@@ -26,6 +26,7 @@ const DayPanel = () => {
 
   socket.on("join_room", function (msg) {
     console.log(msg, "en dayPanel");
+    console.log("this has been reached bitch");
     setIsOrder(msg);
   });
 

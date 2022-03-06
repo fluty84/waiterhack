@@ -29,8 +29,8 @@ class ProductService {
     return this.api.post("/restaurant/:id", user);
   };
 
-  createOrder = (order) => {
-    return this.api.post("/send-order", order);
+  createOrder = (order, tableId) => {
+    return this.api.post("/send-order", { order, tableId });
   };
 
   displayOrder = (id) => {

@@ -15,19 +15,11 @@ const CreateOrder = (props) => {
   const [productNum, setProductNum] = useState([props.isUpdated]);
   const [orderForm, setOrderForm] = useState({});
 
-  //const [room, setRoom] = useState("PopinoRooom");
-
   const [userName, setUsername] = useState("Popino");
 
-  const joinRoom = () => {
-    //if (userName !== "" && room !== "") {
-      console.log("click");
-      socket.emit("join_room", orderForm);
-    
-  };
-
-
-
+  // const joinRoom = () => {
+  //   socket.emit("join_room", orderForm);
+  // };
 
   useEffect(() => {
     loadMenu();
@@ -40,8 +32,11 @@ const CreateOrder = (props) => {
       .catch((err) => console.log(err));
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (arg) => {
+    if (arg.target.value < 0 || arg.target.value > 50) {
+      arg.target.value = 0;
+    }
+    const { name, value } = arg.target;
 
     setOrderForm({
       ...orderForm,
@@ -52,12 +47,14 @@ const CreateOrder = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    joinRoom();
-
-    productService
-      .createOrder(orderForm)
-      .then(() => console.log("producto creado con exito"))
-      .catch((e) => console.log(e));
+    console.log("estoy en create order");
+    // joinRoom();
+    props.orderSent();
+    props.receiveOrder(orderForm);
+    // productService
+    //   .createOrder(orderForm)
+    //   .then(() => console.log("producto creado con exito"))
+    //   .catch((e) => console.log(e));
   };
 
   return (

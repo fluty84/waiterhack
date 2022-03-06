@@ -125,12 +125,10 @@ router.post("/create-table", isAuthenticated, (req, res) => {
 // create order
 
 router.post("/send-order", (req, res) => {
-  const { id } = req.body;
-  console.log(id);
-  const order = req.body;
-  console.log(order);
+  const { tableId, order } = req.body;
 
-  Table.findByIdAndUpdate(id, { $push: { currentOrder: order } })
+  console.log(order);
+  Table.findByIdAndUpdate(tableId, { $push: { currentOrder: order } })
     .then((result) => res.status(201).json({ result }))
     .catch((err) => console.log(err));
 });
@@ -159,10 +157,9 @@ router.put("/edit-order", (req, res) => {
 
 // accept order
 router.post("/accept-order", (req, res) => {
-  
   const { id } = req.body;
 
-  console.log()
+  console.log();
 
   Table.findById(id)
     .then((tab) => {

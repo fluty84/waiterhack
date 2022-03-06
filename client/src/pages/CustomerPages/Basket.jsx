@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import CreateTable from "../../components/table/CreateTable";
 import productService from "../../services/product.services";
 import restaurantService from "../../services/restaurant.services";
+import { Form, Table } from "react-bootstrap";
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001");
 
@@ -11,32 +12,64 @@ function Basket(props) {
   let currentOrder = "";
 
   let { tableId, _id } = useParams();
-  console.log(Object.keys(useParams()));
 
   if (_id) {
-    console.log("heyeyye jude");
   } else {
     _id = props._id;
     tableId = props.tableId;
   }
+
+  const joinRoom = () => {
+    socket.emit("join_room", orders);
+  };
+
+  socket.on("join_room", function (msg) {
+    if (msg === "ACEPTADO") {
+      setIsOrder(msg);
+      setIsOrder(true);
+    }
+  });
 
   const [orders, setOrder] = useState([]);
   const [totalProducts, setTotalProducts] = useState({});
   const [ticket, setTicket] = useState([]);
   const [changes, setChanges] = useState(false);
   const [isOrder, setIsOrder] = useState(false);
+  const [isSubmittedOrder, setIsSubmittedOrder] = useState(false);
+  const [isReceivedMsg, setIsReceivedMsg] = useState(false);
+  const didMount = useRef(false);
 
-  socket.on("join_room", function (msg) {
-    console.log(msg, "en dayPanel");
-    setIsOrder(msg);
-  });
+  // useEffect(() => {
+  //   productService.displayOrder(tableId).then((response) => {
+  //     setOrder(response.data.result.currentOrder);
+  //   });
+  // }, []);
 
   useEffect(() => {
-    productService.displayOrder(tableId).then((response) => {
-      setOrder(response.data.result.currentOrder);
-    });
-  }, []);
+    if (didMount.current) {
+      setOrder([...orders, props.orderForm]);
+
+      console.log(props.orderForm, "this is an order form");
+      console.log(
+        ...orders,
+        "-------------------------!!!!!!!!!!!!!!!!!!!!!!!"
+      );
+    } else {
+      didMount.current = true;
+    }
+  }, [props.isOrderSent]);
   const cuenta = {};
+
+  useEffect(() => {
+    if (didMount.current) {
+      productService
+        .createOrder(...orders, tableId)
+        .then(() => console.log("producto creado con exito"))
+        .catch((e) => console.log(e));
+    } else {
+      didMount.current = true;
+    }
+  }, [isSubmittedOrder]);
 
   useEffect(() => {
     filter(orders);
@@ -110,39 +143,46 @@ function Basket(props) {
   //   }
   // }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmittedOrder(true);
+    joinRoom();
+  };
+
   return (
     <>
       {changes &&
         Object.entries(ticket).map((key) => (
           <p>
-            {key[0]} {key[1]}
+            {key[0]} {key[1]} Euros.
           </p>
         ))}
-      <button class="btn btn-primary" type="button" disabled>
-        <span
-          class={isOrder ? null : "spinner-border spinner-border-sm"}
-          // class="spinner-border spinner-border-sm"
-          role="status"
-          aria-hidden="true"
-        ></span>
-        <span class="sr-only">
-          {isOrder ? (
-            <span>Orden Lista</span>
+      {orders.length !== 0 && (
+        <Form onSubmit={handleSubmit}>
+          {!isSubmittedOrder ? (
+            <button class="btn btn-primary" type="submit">
+              Solicitar pedido
+            </button>
           ) : (
-            <span>Esperando confirmación</span>
+            <button class="btn btn-primary" type="submit">
+              <span
+                class={isOrder ? null : "spinner-border spinner-border-sm"}
+                // class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              <span class="sr-only">
+                {isOrder ? (
+                  <span>Orden Lista</span>
+                ) : (
+                  <span>Esperando confirmación</span>
+                )}
+              </span>{" "}
+            </button>
           )}
-        </span>
-      </button>
+        </Form>
+      )}
     </>
   );
 }
 export default Basket;
-
-//  Object.entries(ticket).forEach(([key, value]) => {
-//           return (
-//             <li>
-//               {" "}
-//               {key} total {value}{" "}
-//             </li>
-//           );
-//         })
