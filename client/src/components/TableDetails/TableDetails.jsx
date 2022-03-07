@@ -1,5 +1,5 @@
 import { Row, Col } from "react-bootstrap";
-import Basket from "../../pages/CustomerPages/Basket";
+import Basket from "../basket/Basket";
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
 import { Button, ButtonGroup, Link } from "@mui/material";

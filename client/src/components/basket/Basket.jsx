@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
 import { useParams } from "react-router-dom";
-import CreateTable from "../../components/table/CreateTable";
+import CreateTable from "../table/CreateTable";
 import productService from "../../services/product.services";
 import restaurantService from "../../services/restaurant.services";
 import { Form, Table } from "react-bootstrap";

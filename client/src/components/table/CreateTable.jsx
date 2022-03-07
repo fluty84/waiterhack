@@ -35,7 +35,7 @@ const CreateTable = (props) => {
   };
 
   const handleChange = (arg) => {
-    console.log(arg.target.value);
+
     if (arg.target.value < 0 || arg.target.value > 100) {
       arg.target.value = 0;
     }

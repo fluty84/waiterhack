@@ -28,6 +28,19 @@ class AuthService {
     login = user => {
         return this.api.post('/auth/loginRestaurant', user)
     }
+
+
+    tableLogin(costumerData, tableId) {
+
+        const {password, customer} = costumerData
+
+        console.log(password, customer, tableId)
+
+        return this.api.post(`/auth/new-customer/${tableId}`, {password, customer})
+    }
+
+
+  
 }
 
 const authService = new AuthService()

@@ -2,6 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const tableSchema = new Schema({
   customer: String,
+  password: String,
   currentOrder: [{}],
   total: [{}], 
   restaurantId: [

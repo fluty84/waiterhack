@@ -2,11 +2,14 @@ import IndexPage from "../pages/IndexPage/IndexPage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
 import CreateOrder from "../components/CreateOrder/CreateOrder";
 import CreateMenu from "../components/createMenu/CreateMenu";
-import Basket from "../pages/CustomerPages/Basket";
+import Basket from "../components/basket/Basket";
 import { Routes, Route } from "react-router-dom";
 import DayPanel from "../pages/DayPanel/DayPanel";
-import ClientView from "../pages/CustomerPages/ClientView";
+import ClientView from "../pages/CustomerPages/clientView/ClientView";
 import QrPrint from "../pages/qrPrint/QrPrint";
+import LoginCustomer from "../pages/CustomerPages/loginCostumer/LoginCustomer";
+import LandingCustomer from "../pages/CustomerPages/landingCostumer/Landing-Costumer";
+
 
 const AppRoutes = () => {
   return (
@@ -32,7 +35,8 @@ const AppRoutes = () => {
 
         <Route
           path="/:_id/:tableId/vista-cliente" //landing cliente cambiar componente
-          element={<QrPrint></QrPrint>}
+
+          element={<LandingCustomer />}
         ></Route>
 
         <Route

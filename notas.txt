@@ -42,10 +42,10 @@ Vaciar mesa
 
 Direcciones dummy: 
 
-http://localhost:3000/6220f66aeca2aa71f20c76d2/6226386a17fe0759c9191234/customer-order
+http://localhost:3000/6220f66aeca2aa71f20c76d2/6226472b051e61b42f2cc712/customer-order
 
 
-http://localhost:3000/6220f66aeca2aa71f20c76d2/6224c318224961b353791920/vista-cliente
+http://localhost:3000/6220f66aeca2aa71f20c76d2/6226472b051e61b42f2cc712/vista-cliente
 
 
 //Mejorar codigo//

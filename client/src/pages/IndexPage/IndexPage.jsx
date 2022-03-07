@@ -3,7 +3,7 @@ import RestaurantPanel from "../../components/restaurantPanel/RestaurantPanel";
 import { AuthContext } from "../../context/auth.context";
 import { useState, useContext, useEffect } from "react";
 import CreateOrder from "../../components/CreateOrder/CreateOrder";
-import Basket from "../CustomerPages/Basket";
+import Basket from "../../components/basket/Basket";
 
 const IndexPage = () => {
   const value = useContext(AuthContext);

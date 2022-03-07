@@ -20,6 +20,18 @@ router.get("/restaurant/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+
+router.get('/table/:tableId', (req, res, next) => {
+  const {tableId} = req.params
+
+    Table
+    .findById(tableId)
+    .then((table) => {
+      res.json(table)
+    })
+    .catch=(e => console.log(e))
+})
+
 //Create Restaurant
 
 router.post("/create", (req, res) => {
@@ -207,5 +219,6 @@ router.post("/update-total", (req, res) => {
     .then((result) => res.status(201).json({ result }))
     .catch((err) => console.log(err));
 });
+
 
 module.exports = router;

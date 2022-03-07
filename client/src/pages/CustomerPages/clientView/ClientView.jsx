@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import restaurantService from "../../services/restaurant.services";
+import restaurantService from "../../../services/restaurant.services";
 import { useParams } from "react-router-dom";
-import Basket from "./Basket";
-import CreateOrder from "../../components/CreateOrder/CreateOrder";
+import Basket from "../../../components/basket/Basket";
+import CreateOrder from "../../../components/CreateOrder/CreateOrder";
 import { Grid, Item } from "@mui/material";
 
 const ClientView = () => {

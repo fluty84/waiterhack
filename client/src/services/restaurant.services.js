@@ -38,6 +38,10 @@ class RestaurantService {
     return this.api.post("/delete-order", id)
   }
 
+  checkTable = (tableId) => {
+    return this.api.get(`/table/${tableId}`)
+  }
+
   verify(token) {
     return this.api.get("/verify", {
       headers: { Authorization: `Bearer ${token}` },
