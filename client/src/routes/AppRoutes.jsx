@@ -6,6 +6,7 @@ import Basket from "../pages/CustomerPages/Basket";
 import { Routes, Route } from "react-router-dom";
 import DayPanel from "../pages/DayPanel/DayPanel";
 import ClientView from "../pages/CustomerPages/ClientView";
+import QrPrint from "../pages/qrPrint/QrPrint";
 
 const AppRoutes = () => {
   return (
@@ -32,6 +33,11 @@ const AppRoutes = () => {
         <Route
           path="/:_id/:tableId/vista-cliente"
           element={<ClientView></ClientView>}
+        ></Route>
+
+        <Route
+          path="/restaurante/:id/panel/:tableId/qr/:number"
+          element={<QrPrint></QrPrint>}
         ></Route>
       </Routes>
     </>

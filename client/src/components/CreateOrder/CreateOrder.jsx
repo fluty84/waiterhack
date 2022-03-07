@@ -24,7 +24,9 @@ const CreateOrder = (props) => {
   useEffect(() => {
     loadMenu();
   }, []);
+
   const { _id, tableId } = useParams();
+
   const loadMenu = () => {
     restaurantService
       .getRestaurant({ _id })
