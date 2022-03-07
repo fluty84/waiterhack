@@ -33,8 +33,7 @@ Modificar comanda
 
 TableDetais
 ---------------
-Borrar comanda
-Boton generar QR (y ruta para imprimir)
+
 
 
 

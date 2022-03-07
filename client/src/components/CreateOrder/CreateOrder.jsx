@@ -11,10 +11,10 @@ import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001");
 
 const CreateOrder = (props) => {
+  console.log(props, 'prosp, wherw')
   const [products, setProducts] = useState([]);
   const [productNum, setProductNum] = useState([props.isUpdated]);
   const [orderForm, setOrderForm] = useState({});
-
   const [userName, setUsername] = useState("Popino");
 
   // const joinRoom = () => {
@@ -49,7 +49,7 @@ const CreateOrder = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("estoy en create order");
+
     props.orderSent();
     props.receiveOrder(orderForm);
   };

@@ -40,9 +40,10 @@ const ClientView = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={8}>
-          <CreateOrder
-            orderSent={orderSent}
+          <CreateOrder 
+          orderSent={orderSent}
             receiveOrder={receiveOrder}
+            popino={'popino'}
           ></CreateOrder>
         </Grid>
         <Grid item xs={4}>

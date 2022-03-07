@@ -79,9 +79,13 @@ const TableDetails = ({ order, handleClose, number }) => {
             handleClose={handleClose}
           ></Basket>
 
+          { order.currentOrder.length ?
+          <>
           <Button onClick={accept}>Aceptar pedido</Button>
 
-          <Button onClick={cancel}>Cancelar Pedido</Button>
+              <Button onClick={cancel}>Cancelar Pedido</Button> </>: null
+          
+             } 
 
           <Button
             href={`/restaurante/${_id}/panel/${order._id}/qr/${number}`}

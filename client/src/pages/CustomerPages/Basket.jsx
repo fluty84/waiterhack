@@ -8,11 +8,8 @@ import { Form, Table } from "react-bootstrap";
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001");
 
-/**
- * Basket
- * @arg props: Object { _id: number, tableId: number }
- */
 function Basket(props) {
+  console.log('props de basket', props)
   const { isLoggedIn } = useContext(AuthContext);
 
   let response = "";
@@ -46,6 +43,10 @@ function Basket(props) {
   const [isSubmittedOrder, setIsSubmittedOrder] = useState(false);
   const [isReceivedMsg, setIsReceivedMsg] = useState(false);
   const [isAcceptedBtn, setIsAcceptedBtn] = useState(false);
+  const [qtySumOK, setQtySumOK] = useState(false)
+  const [qtyProductsArr, setQtyProductsArr] = useState([])
+  const [orderForm, setOrderForm] = useState(props.orderForm);
+
   const didMount = useRef(false);
 
   useEffect(() => {
@@ -80,15 +81,21 @@ function Basket(props) {
     }
   }, [isSubmittedOrder]);
 
-  useEffect(() => {
+  useEffect(() => { ///Renderizado general
     filter(orders);
     calculateTotal();
-    console.log("el orders es ", orders);
+    qtySum(cuenta)
+    console.log(props.orderForm, "-----------------------------------0>>>>>>>>>>>>>>>>>>>>>>>>>>>")
   }, [orders, changes]);
+
 
   useEffect(() => {
     setChanges(true);
   }, [ticket]);
+
+  useEffect(() => {
+    qtySum()
+  }, [cuenta]);
 
   let cuentaTotal = null;
 
@@ -118,7 +125,9 @@ function Basket(props) {
       });
     });
     cuentaTotal = { ...cuenta };
+
     console.log("la cuenta es", cuentaTotal);
+
   }
 
   function calculateTotal() {
@@ -142,17 +151,11 @@ function Basket(props) {
           });
         });
         setTicket(cuentaTotal);
-        console.log(cuentaTotal, "-----------------");
+
         // const jsx = Object.entries(ticket).forEach(([key, value]) => {});
       });
   }
 
-  // const isNew = () => {
-
-  //   if(JSON.stringify(ticket) != JSON.stringify(cuenta)){
-  //     setChanges(true)
-  //   }
-  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -161,40 +164,77 @@ function Basket(props) {
     joinRoom();
   };
 
+
+
+  const qtySum = (cuenta) => {
+    if (cuenta) {
+      const productArr = []
+      Object.values(cuenta).map(item => {
+        productArr.push(item)
+      })
+      setQtyProductsArr(productArr)
+      console.log(qtyProductsArr, "--------------------------------->>>")
+    }
+
+
+  }
+
+  const handleInputChange = (arg) => {
+    if (arg.target.value < 0 || arg.target.value > 50) {
+      arg.target.value = 0;
+    }
+    const { name, value } = arg.target;
+
+    setOrderForm({
+      ...orderForm,
+      [name]: value,
+      id: tableId, //TABLE ID
+    });
+  };
+
   return (
     <>
-      <p>hellooooooo</p>
-      {changes &&
-        Object.entries(ticket).map((key, idx) => (
-          <p>
-            {key[0]} {key[1]} Euros.
-          </p>
-        ))}
+      
+        {changes &&
+          Object.entries(ticket).map((key, idx) => (
+
+            <div className="food">
+            <p>
+              {key[0]} {key[1]} Euros. Unidades = {qtyProductsArr[idx]}
+            </p>
+            
+            </div>
+
+          ))}
+
+      
       {orders.length !== 0 && (
         <Form onSubmit={handleSubmit}>
           {!isAcceptedBtn && !isLoggedIn ? (
-            <button class="btn btn-primary" type="submit">
+            <button className="btn btn-primary" type="submit">
               Solicitar pedido
             </button>
           ) : (
-            <button class="btn btn-primary" type="submit">
+            <button className="btn btn-primary" type="submit">
               <span
-                class={isOrder ? null : "spinner-border spinner-border-sm"}
+                className={isOrder ? null : "spinner-border spinner-border-sm"}
                 // class="spinner-border spinner-border-sm"
                 role="status"
                 aria-hidden="true"
               ></span>
-              <span class="sr-only">
+              <span className="sr-only">
                 {isOrder ? (
                   <span>Orden Lista</span>
                 ) : (
                   <span>Esperando confirmación</span>
                 )}
-              </span>{" "}
+              </span>
             </button>
           )}
-        </Form>
+        </Form>      
       )}
+    
+      
     </>
   );
 }
