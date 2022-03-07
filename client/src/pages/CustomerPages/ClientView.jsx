@@ -12,6 +12,8 @@ const ClientView = () => {
 
   const [orderForm, setOrderForm] = useState([]);
 
+  const [isTicketModified, setIsTicketModified] = useState(false)
+
   const receiveOrder = (order) => {
     setOrderForm(order);
   };
@@ -34,6 +36,18 @@ const ClientView = () => {
     restaurantService.getRestaurant("6220f66aeca2aa71f20c76d2"); //SUSTITUIR POR ID
   };
 
+  const clearOrder = () => {
+    setOrderForm({})
+    //setTicket({})
+    setIsTicketModified(true)
+    console.log('ahora order es ', orderForm)
+  }
+
+  const toggleTicket = () =>{
+
+    setIsTicketModified(false)
+  }
+
   return (
     <>
       <h1>Haz tu pedido</h1>
@@ -43,7 +57,7 @@ const ClientView = () => {
           <CreateOrder 
           orderSent={orderSent}
             receiveOrder={receiveOrder}
-            popino={'popino'}
+       
           ></CreateOrder>
         </Grid>
         <Grid item xs={4}>
@@ -52,6 +66,9 @@ const ClientView = () => {
             isOrderSent={isOrderSent}
             orderSent={orderSent}
             orderForm={orderForm}
+            clearOrder={clearOrder}
+            isTicketModified={isTicketModified}
+            toggleTicket={toggleTicket}
           ></Basket>
         </Grid>
       </Grid>

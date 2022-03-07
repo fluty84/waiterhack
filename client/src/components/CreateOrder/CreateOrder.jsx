@@ -14,8 +14,11 @@ const CreateOrder = (props) => {
   console.log(props, 'prosp, wherw')
   const [products, setProducts] = useState([]);
   const [productNum, setProductNum] = useState([props.isUpdated]);
-  const [orderForm, setOrderForm] = useState({});
+  const [orderForm, setOrderForm] = useState({
+  });
   const [userName, setUsername] = useState("Popino");
+
+
 
   // const joinRoom = () => {
   //   socket.emit("join_room", orderForm);
@@ -23,6 +26,15 @@ const CreateOrder = (props) => {
 
   useEffect(() => {
     loadMenu();
+
+    products.map((product) => {
+      const { name } = product
+      setOrderForm({
+        ...orderForm,
+        [name]: 0
+      })
+    })
+
   }, []);
 
   const { _id, tableId } = useParams();
@@ -52,12 +64,16 @@ const CreateOrder = (props) => {
 
     props.orderSent();
     props.receiveOrder(orderForm);
+    setOrderForm(prevState => {
+      Object.keys(prevState).forEach(el => (prevState = { ...prevState, [el]: 0 }))
+      return prevState;
+    })
   };
 
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        Lista de productos
+        Lista de productos Pide
         {products.map((product) => {
           return (
             <li key={product._id}>
@@ -65,12 +81,13 @@ const CreateOrder = (props) => {
               <input
                 type="number"
                 name={product.name}
+                value={orderForm[product.name]}
                 onChange={handleInputChange}
               ></input>
               <input
                 type="hidden"
                 name="id"
-                value="621f984c745ab17740b49361"
+                value="621f984c745ab17740b49361" //
               ></input>
             </li>
           );

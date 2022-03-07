@@ -6,10 +6,12 @@ import productService from "../../services/product.services";
 import restaurantService from "../../services/restaurant.services";
 import { Form, Table } from "react-bootstrap";
 import io from "socket.io-client";
+import { Button } from "@mui/material";
+
 const socket = io.connect("http://localhost:3001");
 
 function Basket(props) {
-  console.log('props de basket', props)
+
   const { isLoggedIn } = useContext(AuthContext);
 
   let response = "";
@@ -36,14 +38,11 @@ function Basket(props) {
   });
 
   const [orders, setOrder] = useState([]);
-  const [totalProducts, setTotalProducts] = useState({});
   const [ticket, setTicket] = useState([]);
   const [changes, setChanges] = useState(false);
   const [isOrder, setIsOrder] = useState(false);
   const [isSubmittedOrder, setIsSubmittedOrder] = useState(false);
-  const [isReceivedMsg, setIsReceivedMsg] = useState(false);
   const [isAcceptedBtn, setIsAcceptedBtn] = useState(false);
-  const [qtySumOK, setQtySumOK] = useState(false)
   const [qtyProductsArr, setQtyProductsArr] = useState([])
   const [orderForm, setOrderForm] = useState(props.orderForm);
 
@@ -69,6 +68,8 @@ function Basket(props) {
     }
   }, [props.isOrderSent]);
   const cuenta = {};
+
+  //TODO filter object orders with key-values that are greater than 0
 
   useEffect(() => {
     if (didMount.current) {
@@ -173,41 +174,51 @@ function Basket(props) {
         productArr.push(item)
       })
       setQtyProductsArr(productArr)
-      console.log(qtyProductsArr, "--------------------------------->>>")
-    }
 
+    }
 
   }
 
-  const handleInputChange = (arg) => {
-    if (arg.target.value < 0 || arg.target.value > 50) {
-      arg.target.value = 0;
+  useEffect(() => {
+    if (props.isTicketModified) {
+      setTicket([])
+      setOrder([])
+      console.log(orders, 'orderrrrrrrrs')
+      props.toggleTicket()
     }
-    const { name, value } = arg.target;
+  }, [props.isTicketModified])
 
-    setOrderForm({
-      ...orderForm,
-      [name]: value,
-      id: tableId, //TABLE ID
-    });
-  };
+
+  //   setOrderForm({
+  //     ...orderForm,
+  //     [name]: value,
+  //     id: tableId, //TABLE ID
+  //   });
+  // };
+
+  // const clearOrder = () => {
+  //   props.setOrderForm({})
+  //   setTicket({})
+
+  //   console.log('ahora order es ', props.orderForm)
+  // }
 
   return (
     <>
-      
-        {changes &&
-          Object.entries(ticket).map((key, idx) => (
 
-            <div className="food">
+      {changes &&
+        Object.entries(ticket).map((key, idx) => (
+
+          key[1] > 0 ? (<div className="food">
             <p>
               {key[0]} {key[1]} Euros. Unidades = {qtyProductsArr[idx]}
             </p>
-            
-            </div>
 
-          ))}
+          </div>) : null
 
-      
+        ))}
+
+
       {orders.length !== 0 && (
         <Form onSubmit={handleSubmit}>
           {!isAcceptedBtn && !isLoggedIn ? (
@@ -231,10 +242,11 @@ function Basket(props) {
               </span>
             </button>
           )}
-        </Form>      
+        </Form>
       )}
-    
-      
+      <Button onClick={props.clearOrder}>Modificar Pedido</Button>
+
+
     </>
   );
 }

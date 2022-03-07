@@ -19,8 +19,8 @@ const AppRoutes = () => {
         <Route path="/restaurante/:id/menu" element={<CreateMenu />}></Route>
 
         <Route
-          path="/:_id/:tableId/customer-order"
-          element={<CreateOrder></CreateOrder>}
+          path="/:_id/:tableId/customer-order" // Pedido del cliente
+          element={<ClientView></ClientView>}
         ></Route>
 
         <Route
@@ -31,8 +31,8 @@ const AppRoutes = () => {
         <Route path="/panel" element={<DayPanel></DayPanel>}></Route>
 
         <Route
-          path="/:_id/:tableId/vista-cliente"
-          element={<ClientView></ClientView>}
+          path="/:_id/:tableId/vista-cliente" //landing cliente cambiar componente
+          element={<QrPrint></QrPrint>}
         ></Route>
 
         <Route
