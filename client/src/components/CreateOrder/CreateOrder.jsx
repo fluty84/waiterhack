@@ -50,13 +50,8 @@ const CreateOrder = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("estoy en create order");
-    // joinRoom();
     props.orderSent();
     props.receiveOrder(orderForm);
-    // productService
-    //   .createOrder(orderForm)
-    //   .then(() => console.log("producto creado con exito"))
-    //   .catch((e) => console.log(e));
   };
 
   return (

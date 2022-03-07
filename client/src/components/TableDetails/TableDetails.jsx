@@ -8,10 +8,7 @@ import { io } from "socket.io-client";
 import Qr from "../qr/Qr";
 import QrPrint from "../../pages/qrPrint/QrPrint";
 
-
-
-
-const socket = io.connect('http://localhost:3001')
+const socket = io.connect("http://localhost:3001");
 
 import("./TableDetails.css");
 
@@ -39,32 +36,27 @@ const TableDetails = ({ order, handleClose, number }) => {
   });
 
   const accept = () => {
+    socket.emit("join_room", "ACEPTADO");
 
-    socket.emit('join_room', true)
-
-    console.log('ACEPTADO')
     restaurantService
       .acceptOrder({ id: tableId[0] })
       .then(({ data }) => {
-        console.log(data)
+        console.log(data);
       })
-      .catch(err => console.log(err))
-
-  }
+      .catch((err) => console.log(err));
+  };
 
   const cancel = () => {
+    socket.emit("join_room", "cancelado");
 
-    socket.emit('join_room', 'cancelado')
-
-
-    console.log('cancelado')
+    console.log("cancelado");
     restaurantService
       .cancelOrder({ id: tableId[0] })
       .then(({ data }) => {
-        console.log(data)
+        console.log(data);
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="order">
@@ -81,25 +73,23 @@ const TableDetails = ({ order, handleClose, number }) => {
         </Col>
 
         <Col md={6}>
-          <Basket _id={_id} tableId={tableId[0]} handleClose={handleClose}></Basket>
+          <Basket
+            _id={_id}
+            tableId={tableId[0]}
+            handleClose={handleClose}
+          ></Basket>
 
-          <Button onClick={accept}>
-            Aceptar pedido
-          </Button>
+          <Button onClick={accept}>Aceptar pedido</Button>
 
-          <Button onClick={cancel}>
-            Cancelar Pedido
-          </Button>
+          <Button onClick={cancel}>Cancelar Pedido</Button>
 
-          <Button href={`/restaurante/${_id}/panel/${order._id}/qr/${number}`} target="_blank">
+          <Button
+            href={`/restaurante/${_id}/panel/${order._id}/qr/${number}`}
+            target="_blank"
+          >
             Imprimir QR
           </Button>
-          
         </Col>
-
-
-
-
       </Row>
     </div>
   );

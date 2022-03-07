@@ -9,7 +9,8 @@ const router = express.Router();
 const saltRounds = 10;
 
 // Get one restaurant
-router.get("/restaurant/:id", isAuthenticated, (req, res) => {
+router.get("/restaurant/:id", (req, res) => {
+  //BORRADO AUTHENTICATED PARA PODER REALIZAR MUESTRA DE MENU EN CUSTOMER
   const { id } = req.params;
 
   Restaurant.findById(id)

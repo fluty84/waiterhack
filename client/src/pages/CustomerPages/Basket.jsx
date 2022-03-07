@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
+import { AuthContext } from "../../context/auth.context";
 import { useParams } from "react-router-dom";
 import CreateTable from "../../components/table/CreateTable";
 import productService from "../../services/product.services";
@@ -8,10 +9,12 @@ import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001");
 
 /**
- * Basket 
+ * Basket
  * @arg props: Object { _id: number, tableId: number }
  */
 function Basket(props) {
+  const { isLoggedIn } = useContext(AuthContext);
+
   let response = "";
   let currentOrder = "";
 
@@ -31,6 +34,7 @@ function Basket(props) {
     if (msg === "ACEPTADO") {
       setIsOrder(msg);
       setIsOrder(true);
+      setIsAcceptedBtn(false);
     }
   });
 
@@ -41,13 +45,14 @@ function Basket(props) {
   const [isOrder, setIsOrder] = useState(false);
   const [isSubmittedOrder, setIsSubmittedOrder] = useState(false);
   const [isReceivedMsg, setIsReceivedMsg] = useState(false);
+  const [isAcceptedBtn, setIsAcceptedBtn] = useState(false);
   const didMount = useRef(false);
 
-  // useEffect(() => {
-  //   productService.displayOrder(tableId).then((response) => {
-  //     setOrder(response.data.result.currentOrder);
-  //   });
-  // }, []);
+  useEffect(() => {
+    productService.displayOrder(tableId).then((response) => {
+      setOrder(response.data.result.currentOrder);
+    });
+  }, []);
 
   useEffect(() => {
     if (didMount.current) {
@@ -78,6 +83,7 @@ function Basket(props) {
   useEffect(() => {
     filter(orders);
     calculateTotal();
+    console.log("el orders es ", orders);
   }, [orders, changes]);
 
   useEffect(() => {
@@ -93,7 +99,7 @@ function Basket(props) {
       newArr.push(Object.keys(product).flat());
     });
     const flatArr = newArr.flat();
-    const uniqueKeys = [...new Set(flatArr)]; 
+    const uniqueKeys = [...new Set(flatArr)];
     const filteredArr = uniqueKeys.filter((x) => {
       return x != "id";
     });
@@ -112,7 +118,7 @@ function Basket(props) {
       });
     });
     cuentaTotal = { ...cuenta };
-    console.log('la cuenta es',cuentaTotal)
+    console.log("la cuenta es", cuentaTotal);
   }
 
   function calculateTotal() {
@@ -136,7 +142,7 @@ function Basket(props) {
           });
         });
         setTicket(cuentaTotal);
-        console.log("el ticket", ticket);
+        console.log(cuentaTotal, "-----------------");
         // const jsx = Object.entries(ticket).forEach(([key, value]) => {});
       });
   }
@@ -150,12 +156,14 @@ function Basket(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsAcceptedBtn(true);
     setIsSubmittedOrder(true);
     joinRoom();
   };
 
   return (
     <>
+      <p>hellooooooo</p>
       {changes &&
         Object.entries(ticket).map((key, idx) => (
           <p>
@@ -164,7 +172,7 @@ function Basket(props) {
         ))}
       {orders.length !== 0 && (
         <Form onSubmit={handleSubmit}>
-          {!isSubmittedOrder ? (
+          {!isAcceptedBtn && !isLoggedIn ? (
             <button class="btn btn-primary" type="submit">
               Solicitar pedido
             </button>
