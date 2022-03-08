@@ -1,6 +1,5 @@
 import IndexPage from "../pages/IndexPage/IndexPage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
-import CreateOrder from "../components/CreateOrder/CreateOrder";
 import CreateMenu from "../components/createMenu/CreateMenu";
 import Basket from "../components/basket/Basket";
 import { Routes, Route } from "react-router-dom";
