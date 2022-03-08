@@ -5,7 +5,7 @@ import restaurantService from "../../services/restaurant.services";
 import("./MenuList.css");
 
 const MenuList = ({ newProduct }) => {
-  console.log(useContext(AuthContext));
+  
   const { user } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
 

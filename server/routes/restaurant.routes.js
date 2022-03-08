@@ -20,17 +20,13 @@ router.get("/restaurant/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.get("/table/:tableId", (req, res, next) => {
+  const { tableId } = req.params;
 
-router.get('/table/:tableId', (req, res, next) => {
-  const {tableId} = req.params
-
-    Table
-    .findById(tableId)
-    .then((table) => {
-      res.json(table)
-    })
-    .catch=(e => console.log(e))
-})
+  Table.findById(tableId).then((table) => {
+    res.json(table);
+  }).catch = (err) => console.log(err);
+});
 
 //Create Restaurant
 
@@ -123,8 +119,6 @@ router.post("/create-table", isAuthenticated, (req, res) => {
 
   const restaurantId = req.payload._id;
 
-  console.log("id del restaurante", restaurantId);
-
   Table.create({ restaurantId })
     .then((table) => {
       return Restaurant.findByIdAndUpdate(restaurantId, {
@@ -211,14 +205,18 @@ router.delete("/delete-total", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+//Update total
+
 router.post("/update-total", (req, res) => {
+  
   const { id } = req.body;
   const order = req.body;
+console.log({order}, "heyyy ---------------------->>>>>>>")
+  console.log(req.body, 'de update total')
 
   Table.findOneAndUpdate(id, { total: order })
     .then((result) => res.status(201).json({ result }))
     .catch((err) => console.log(err));
 });
-
 
 module.exports = router;

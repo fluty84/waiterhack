@@ -1,4 +1,4 @@
-import LoginForm from "../../components/login/login";
+import LoginPage from "../../components/login/LoginPage";
 import RestaurantPanel from "../../components/restaurantPanel/RestaurantPanel";
 import { AuthContext } from "../../context/auth.context";
 import { useState, useContext, useEffect } from "react";
@@ -16,7 +16,7 @@ const IndexPage = () => {
           <CreateOrder></CreateOrder>
         </>
       ) : (
-        <LoginForm />
+        <LoginPage />
       )}
     </>
   );

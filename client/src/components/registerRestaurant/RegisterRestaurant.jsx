@@ -33,8 +33,6 @@ const {restaurant, email, address, password} = restaurantData
     const handleSubmit = e => {
         e.preventDefault()
 
-        console.log(restaurantData)
-
         restaurantService
             .saveRestaurant(restaurantData)
             .then(({ data }) => {

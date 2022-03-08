@@ -11,18 +11,12 @@ import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001");
 
 const CreateOrder = (props) => {
-  console.log(props, 'prosp, wherw')
+ 
   const [products, setProducts] = useState([]);
   const [productNum, setProductNum] = useState([props.isUpdated]);
   const [orderForm, setOrderForm] = useState({
   });
   const [userName, setUsername] = useState("Popino");
-
-
-
-  // const joinRoom = () => {
-  //   socket.emit("join_room", orderForm);
-  // };
 
   useEffect(() => {
     loadMenu();

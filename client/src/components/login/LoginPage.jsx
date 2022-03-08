@@ -1,11 +1,12 @@
 import { useState, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import "../login/login.css";
 import TextField from "@mui/material/TextField";
 import authService from "../../services/auth.services";
-import { AuthContext } from "./../../context/auth.context";
+import { AuthContext } from "../../context/auth.context";
 import { useNavigate } from "react-router-dom";
+
+import ("./LoginPage.css");
 
 const LoginPage = () => {
   const [loginForm, setLoginForm] = useState({
@@ -34,7 +35,6 @@ const LoginPage = () => {
     authService
       .login(loginForm)
       .then(({ data }) => {
-        //console.log("JWT token", data.authToken)
         storeToken(data.authToken);
         authenticateUser();
         // setShowMessage(true)

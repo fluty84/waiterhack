@@ -57,12 +57,6 @@ function Basket(props) {
   useEffect(() => {
     if (didMount.current) {
       setOrder([...orders, props.orderForm]);
-
-      console.log(props.orderForm, "this is an order form");
-      console.log(
-        ...orders,
-        "-------------------------!!!!!!!!!!!!!!!!!!!!!!!"
-      );
     } else {
       didMount.current = true;
     }
@@ -76,7 +70,7 @@ function Basket(props) {
       productService
         .createOrder(...orders, tableId)
         .then(() => console.log("producto creado con exito"))
-        .catch((e) => console.log(e));
+        .catch((err) => console.log(err));
     } else {
       didMount.current = true;
     }
@@ -86,7 +80,6 @@ function Basket(props) {
     filter(orders);
     calculateTotal();
     qtySum(cuenta)
-    console.log(props.orderForm, "-----------------------------------0>>>>>>>>>>>>>>>>>>>>>>>>>>>")
   }, [orders, changes]);
 
 
@@ -127,7 +120,6 @@ function Basket(props) {
     });
     cuentaTotal = { ...cuenta };
 
-    console.log("la cuenta es", cuentaTotal);
 
   }
 
@@ -183,25 +175,9 @@ function Basket(props) {
     if (props.isTicketModified) {
       setTicket([])
       setOrder([])
-      console.log(orders, 'orderrrrrrrrs')
       props.toggleTicket()
     }
   }, [props.isTicketModified])
-
-
-  //   setOrderForm({
-  //     ...orderForm,
-  //     [name]: value,
-  //     id: tableId, //TABLE ID
-  //   });
-  // };
-
-  // const clearOrder = () => {
-  //   props.setOrderForm({})
-  //   setTicket({})
-
-  //   console.log('ahora order es ', props.orderForm)
-  // }
 
   return (
     <>

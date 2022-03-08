@@ -30,7 +30,7 @@
 | GET | `/restaurante/:id/:tableid/customer-login` | Password generate session login| |
 | GET | `/restaurante/:id/:tableid/customer-order` | Menu Customer Form QR LANDING| |
 | POST | `/restaurante/:id/:tableid/customer-order` | Menu Customer Form | |
-| GET | `/restaurante/:id/:tableid/customer-order/check-out` | Menu Customer Form | |
+| GET | `/restaurante/:id/:tableid/check-out` | Pre final Paid view | |
 | Server Routes | | | |
 | | | |
 | POST | `/api/create` | New Restaurant regisrer |✓ |

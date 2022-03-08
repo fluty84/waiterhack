@@ -9,7 +9,8 @@ import ClientView from "../pages/CustomerPages/clientView/ClientView";
 import QrPrint from "../pages/qrPrint/QrPrint";
 import LoginCustomer from "../pages/CustomerPages/loginCostumer/LoginCustomer";
 import LandingCustomer from "../pages/CustomerPages/landingCostumer/Landing-Costumer";
-
+import CheckOut from "../pages/checkOut/CheckOut";
+import LoginPage from "../components/login/LoginPage";
 
 const AppRoutes = () => {
   return (
@@ -40,9 +41,22 @@ const AppRoutes = () => {
         ></Route>
 
         <Route
-          path="/restaurante/:id/panel/:tableId/qr/:number"
+          path="/restaurante/:id/panel/:tableId/qr/:number" // impresion de QR
           element={<QrPrint></QrPrint>}
         ></Route>
+
+        <Route
+          path="/:id/:tableId/check-out" //resumen antes de pago
+          element={<CheckOut></CheckOut>} 
+          
+        ></Route>
+
+        <Route
+            path="/restaurante/log-in" // impresion de QR
+            element={<LoginPage></LoginPage>}
+        ></Route>
+      
+
       </Routes>
     </>
   );

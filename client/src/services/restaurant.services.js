@@ -31,15 +31,21 @@ class RestaurantService {
 
   acceptOrder = (id) => {
     return this.api.post("/accept-order", id);
-  }
+  };
 
   cancelOrder = (id) => {
-    console.log('el id en el servicio es ', id)
-    return this.api.post("/delete-order", id)
-  }
+    return this.api.post("/delete-order", id);
+  };
 
   checkTable = (tableId) => {
-    return this.api.get(`/table/${tableId}`)
+    return this.api.get(`/table/${tableId}`);
+  };
+
+  editFinalOrder = (order) => {
+
+    console.log(order)
+    return this.api.get('/update-total', order)
+    
   }
 
   verify(token) {

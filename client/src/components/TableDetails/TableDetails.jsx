@@ -7,6 +7,7 @@ import restaurantService from "../../services/restaurant.services";
 import { io } from "socket.io-client";
 import Qr from "../qr/Qr";
 import QrPrint from "../../pages/qrPrint/QrPrint";
+import { useNavigate } from "react-router-dom";
 
 const socket = io.connect("http://localhost:3001");
 
@@ -79,13 +80,12 @@ const TableDetails = ({ order, handleClose, number }) => {
             handleClose={handleClose}
           ></Basket>
 
-          { order.currentOrder.length ?
-          <>
-          <Button onClick={accept}>Aceptar pedido</Button>
-
-              <Button onClick={cancel}>Cancelar Pedido</Button> </>: null
-          
-             } 
+          {order.currentOrder.length ? (
+            <>
+              <Button onClick={accept}>Aceptar pedido</Button>
+              <Button onClick={cancel}>Cancelar Pedido</Button>{" "}
+            </>
+          ) : null}
 
           <Button
             href={`/restaurante/${_id}/panel/${order._id}/qr/${number}`}
@@ -93,6 +93,11 @@ const TableDetails = ({ order, handleClose, number }) => {
           >
             Imprimir QR
           </Button>
+          
+          <Button>
+          <Link to={`/restaurante/${_id}/${tableId}/check-out`}>Go to Checkout</Link>
+        </Button>
+       
         </Col>
       </Row>
     </div>
