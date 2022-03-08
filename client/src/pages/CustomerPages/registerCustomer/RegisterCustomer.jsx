@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import restaurantService from '../../../services/restaurant.services'
 import authService from '../../../services/auth.services'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 
 
 
 const RegisterCustomer = () => {
 
+    const navigate = useNavigate()
     const {tableId} = useParams()
-console.log(tableId)
+
     const [customerData, setCustomerData] = useState(
         {
             customer: "",
@@ -39,14 +40,12 @@ console.log(tableId)
     const handleSubmit = e => {
         e.preventDefault()
 
-        console.log(tableId, "this is tableID")
-
         authService
             .tableLogin(customerData, tableId)
-            .then((response) => {
-               console.log(response)
+            .then(() => {
+               navigate('/')
             })
-
+        
     }
 
     return (

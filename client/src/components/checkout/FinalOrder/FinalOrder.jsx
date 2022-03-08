@@ -5,7 +5,10 @@ import { AuthContext } from "../../../context/auth.context";
 import { useContext } from "react";
 
 const FinalOrder = () => {
+
   const { id, tableId } = useParams();
+
+
   const [finalOrderData, setFinalOrderData] = useState([]);
   const [orderDataNoIds, setOrderDataNoIds] = useState([]);
   const [arrFinalOrder, setArrFinalOrder] = useState([]);
@@ -43,19 +46,30 @@ const FinalOrder = () => {
       .then((res) => setMenuData(res.data.menu))
       .then(() => {
         arrOfObjects.forEach((elm, index) => {
+
           arrOfOrders.push(Object.entries(elm));
+  
           menuData.forEach((menuItem) => {
             for (const property in menuItem) {
-              if (menuItem.name === arrOfOrders[index][0][0]) {
-                arrOfOrders[index][0].length < 3 &&
-                  arrOfOrders[index][0].push(menuItem.price);
-              }
+              
+              arrOfOrders[0].forEach((item, index) => {
+                
+                
+                console.log(menuItem.name, 'x', arrOfOrders[0][index][0])
+                
+                if (menuItem.name === arrOfOrders[0][index][0]) {
+                  arrOfOrders[0][index].length < 3 &&
+                    arrOfOrders[0][index].push(menuItem.price)
+                }
+
+              })
+
             }
           });
         });
       })
-      .then(() => setArrFinalOrder(arrOfOrders.flat()));
-  };
+      .then(() => setArrFinalOrder((arrOfOrders.flat())))
+  }
 
   return (
     <>
@@ -70,6 +84,7 @@ const FinalOrder = () => {
           return (
             <div class="mb-3">
               <div class="input-group">
+                <p>{order[0]}, {order[1]}, {order[2]}</p>
                 <span class="input-group-text">{order[0]}</span>
                 <input
                   type="number"
@@ -83,7 +98,7 @@ const FinalOrder = () => {
                 <input type="hidden" value={tableId} name="id"></input>
                 <span class="input-group-text">€</span>
                 <span class="input-group-text">
-                  {parseInt(order[1]) * order[2]}
+                  {/* {parseInt(order[1]) * order[2]} */}
                 </span>
               </div>
             </div>

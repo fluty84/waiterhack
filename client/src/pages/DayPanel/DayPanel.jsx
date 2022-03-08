@@ -68,7 +68,6 @@ const DayPanel = () => {
                 onClick={() => {
                   setModalData(table);
                   setTableNumber(idx+1)
-                  console.log('click o table',tableNumber)
                   handleOpen();
                 }}
                 src={!table.currentOrder.length ? mesaOff : mesaOn}
