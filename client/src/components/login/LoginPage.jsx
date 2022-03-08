@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button"
 import TextField from "@mui/material/TextField"
 import authService from "../../services/auth.services"
 import { AuthContext } from "../../context/auth.context"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import ("./LoginPage.css")
 
@@ -70,7 +70,7 @@ const LoginPage = () => {
           Submit
         </Button>
 
-        <h1>PONER BOTON REDIRECCIONAR A PAGINA DE REGISTRO</h1>
+        <Link to={'/restaurante/registro'}> ¿No tienes usuario? ¡Regístrate!</Link>
       </Form>
     </div>
   )

@@ -56,7 +56,7 @@ const AppRoutes = () => {
           element={<CheckOut/>}
         />
 
-        <Route // impresion de QR
+        <Route // Logueo Restaurante
           path="/restaurante/log-in" 
           element={<LoginPage/>}
         />
