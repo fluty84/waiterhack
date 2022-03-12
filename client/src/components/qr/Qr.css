@@ -1,3 +1,11 @@
 .qr{
     margin-top: 150px;
 }
+
+.flexDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+

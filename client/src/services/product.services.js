@@ -5,7 +5,7 @@ import { AuthContext } from "../context/auth.context";
 class ProductService {
   constructor() {
     this.api = axios.create({
-      baseURL: "http://localhost:5005/api",
+      baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5005/api'
     });
 
     this.api.interceptors.request.use((config) => {
@@ -32,6 +32,12 @@ class ProductService {
   createOrder = (order, tableId) => {
     return this.api.post("/send-order", { order, tableId });
   };
+
+    resetTable = (tableId) => {
+      console.log(tableId)
+    return this.api.post("/reset-table", {tableId });
+  };
+
 
   displayOrder = (id) => {
     console.log("this display is: " + id);

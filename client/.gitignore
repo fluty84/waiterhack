@@ -1,23 +1,11 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# Dependency directory
+node_modules
+node_modules/
 /node_modules
-/.pnp
-.pnp.js
 
-# testing
-/coverage
 
-# production
-/build
+# Debug log from npm
+npm-debug.log
 
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Environment Variables should NEVER be published
+.env

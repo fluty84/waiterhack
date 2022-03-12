@@ -1,8 +1,18 @@
 .mesa {
     margin-top: 50px;
-    
 }
 .mesa input {
     vertical-align: middle;
     max-width: 200px;
+}
+
+.btn-back {
+    position: absolute!important;
+    bottom: 80px;
+    left: 100px;
+}
+
+
+.mesa .h3-white {
+    color: white
 }

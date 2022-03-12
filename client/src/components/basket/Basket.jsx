@@ -1,41 +1,32 @@
 import { useEffect, useState, useRef, useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
 import { useParams } from "react-router-dom";
-import CreateTable from "../table/CreateTable";
 import productService from "../../services/product.services";
 import restaurantService from "../../services/restaurant.services";
-import { Form, Table } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import io from "socket.io-client";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const socket = io.connect("http://localhost:3001");
+import './Basket.css'
+
+const socket = io()
 
 function Basket(props) {
 
   const { isLoggedIn } = useContext(AuthContext);
-
-  let response = "";
-  let currentOrder = "";
-
   let { tableId, _id } = useParams();
+
+  const navigate = useNavigate()
+
+
 
   if (_id) {
   } else {
     _id = props._id;
     tableId = props.tableId;
+
   }
-
-  const joinRoom = () => {
-    socket.emit("join_room", orders);
-  };
-
-  socket.on("join_room", function (msg) {
-    if (msg === "ACEPTADO") {
-      setIsOrder(msg);
-      setIsOrder(true);
-      setIsAcceptedBtn(false);
-    }
-  });
 
   const [orders, setOrder] = useState([]);
   const [ticket, setTicket] = useState([]);
@@ -44,18 +35,65 @@ function Basket(props) {
   const [isSubmittedOrder, setIsSubmittedOrder] = useState(false);
   const [isAcceptedBtn, setIsAcceptedBtn] = useState(false);
   const [qtyProductsArr, setQtyProductsArr] = useState([])
-  const [orderForm, setOrderForm] = useState(props.orderForm);
+
+  const joinRoom = () => { // con socket
+    socket.emit("join_room", orders);
+  };
+
+  socket.on("join_room", function (msg) {
+    if (msg === "ACEPTADO") {
+      if (!isLoggedIn) {
+
+        setIsOrder(msg);
+        setIsOrder(true);
+        setIsSubmittedOrder(false)
+        setIsAcceptedBtn(true);
+      }
+
+    }
+  });
+
+  useEffect(() => {  //solo sin socket
+  if(isAcceptedBtn) { const refresh = setInterval(() => {
+
+      productService
+        .displayOrder(tableId)
+        .then((response) => {
+          if (!response.data.result.currentOrder.length) {
+
+            setIsOrder(true);
+            setIsSubmittedOrder(false)
+            setIsAcceptedBtn(true);   
+
+            setTimeout(() => {
+              navigate(`/${_id}/${tableId}/panel-cliente`)
+            }, 5000);
+          }
+
+        })
+    }, 1000)
+    return () => clearInterval(refresh)
+  }
+  }, [orders, changes])
+
+  useEffect(() => { ///Renderizado general
+    filter(orders);
+    calculateTotal();
+    qtySum(cuenta)
+  }, [orders, changes]);
 
   const didMount = useRef(false);
 
+
   useEffect(() => {
-    productService.displayOrder(tableId).then((response) => {
-      setOrder(response.data.result.currentOrder);
-    });
+    productService
+      .displayOrder(tableId)
+      .then((response) => setOrder(response.data.result.currentOrder))
   }, []);
 
   useEffect(() => {
     if (didMount.current) {
+
       setOrder([...orders, props.orderForm]);
     } else {
       didMount.current = true;
@@ -67,20 +105,23 @@ function Basket(props) {
 
   useEffect(() => {
     if (didMount.current) {
-      productService
-        .createOrder(...orders, tableId)
-        .then(() => console.log("producto creado con exito"))
-        .catch((err) => console.log(err));
+      if (isSubmittedOrder) {
+
+        productService
+          .createOrder(...orders, tableId)
+          .then(() => setOrder([]))
+          .then(() => console.log(orders))
+          .catch((err) => console.log(err));
+      }
+
     } else {
       didMount.current = true;
     }
   }, [isSubmittedOrder]);
 
-  useEffect(() => { ///Renderizado general
-    filter(orders);
-    calculateTotal();
-    qtySum(cuenta)
-  }, [orders, changes]);
+
+
+
 
 
   useEffect(() => {
@@ -144,8 +185,6 @@ function Basket(props) {
           });
         });
         setTicket(cuentaTotal);
-
-        // const jsx = Object.entries(ticket).forEach(([key, value]) => {});
       });
   }
 
@@ -154,7 +193,8 @@ function Basket(props) {
     e.preventDefault();
     setIsAcceptedBtn(true);
     setIsSubmittedOrder(true);
-    joinRoom();
+
+    //joinRoom(); //quitar sin socket
   };
 
 
@@ -195,11 +235,11 @@ function Basket(props) {
         ))}
 
 
-      {orders.length !== 0 && (
+      {(
         <Form onSubmit={handleSubmit}>
           {!isAcceptedBtn && !isLoggedIn ? (
             <button className="btn btn-primary" type="submit">
-              Solicitar pedido
+              Confirmar Pedido
             </button>
           ) : (
             <button className="btn btn-primary" type="submit">
@@ -220,7 +260,7 @@ function Basket(props) {
           )}
         </Form>
       )}
-      <Button onClick={props.clearOrder}>Modificar Pedido</Button>
+      {!isLoggedIn && <Button className="btn-primary" onClick={props.clearOrder}>Modificar Pedido</Button>}
 
 
     </>

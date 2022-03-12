@@ -5,6 +5,9 @@ require("./db");
 const express = require("express");
 
 const app = express();
+const cors = require('cors')
+app.use(cors())
+
 
 require("./config")(app);
 
@@ -14,7 +17,3 @@ app.use("/api", allRoutes);
 require("./error-handling")(app);
 
 module.exports = app
-
-
-
-

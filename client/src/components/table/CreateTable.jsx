@@ -47,18 +47,12 @@ const CreateTable = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let promises = [];
-
-    // for(let i = 0; i < table.numberOfTables; i++) {
-    //   promises.push( restaurantService.createTable(table.restaurantId))
-    // }
-
-    // Promise.all(promises).then((x) => console.log(x))
 
     for (let i = 0; i < table.numberOfTables; i++) {
       restaurantService
         .createTable(table.restaurantId)
-        .then((x) => console.log(x));
+        .then((table) => console.log(table))
+        .catch((err) => console.log(err))
     }
   };
 
@@ -92,7 +86,7 @@ const CreateTable = (props) => {
             >
               +
             </Fab>
-            <div>Current Number of tables: {console.log(value)}</div>
+            <div>Current Number of tables: {value}</div>
           </div>
 
           <Button variant="primary" type="submit">

@@ -5,7 +5,8 @@
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
-    "@mui/material": "^5.4.4",
+    "@mui/material": "^5.5.0",
+    "@mui/styles": "^5.5.0",
     "@mui/x-data-grid": "^5.5.1",
     "@mui/x-data-grid-generator": "^5.5.1",
     "@testing-library/jest-dom": "^5.16.2",
@@ -16,7 +17,7 @@
     "dotenv": "^16.0.0",
     "qrcode": "^1.5.0",
     "react": "^17.0.2",
-    "react-bootstrap": "^2.1.2",
+    "react-bootstrap": "^2.2.0",
     "react-dom": "^17.0.2",
     "react-qr-code": "^2.0.3",
     "react-router-dom": "^6.2.2",

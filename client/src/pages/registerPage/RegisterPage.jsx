@@ -11,7 +11,7 @@ const RegisterPage = () => {
         </Col>
       </Row>
     </div>
-  );
-};
+  )
+}
 
 export default RegisterPage;

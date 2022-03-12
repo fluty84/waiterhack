@@ -9,6 +9,10 @@ import QrPrint from "../pages/qrPrint/QrPrint";
 import LandingCustomer from "../pages/CustomerPages/landingCostumer/Landing-Costumer";
 import CheckOut from "../pages/checkOut/CheckOut";
 import LoginPage from "../components/login/LoginPage";
+import ClientPanel from "../pages/CustomerPages/clientPanel/ClientPanel";
+import NavbarClient from "../components/navbarClient/NavbarClient";
+import PaymentGateway from "../pages/paymentGateway/PaymentGateway";
+
 
 const AppRoutes = () => {
   return (
@@ -41,9 +45,14 @@ const AppRoutes = () => {
           element={<DayPanel />}
         />
 
-        <Route //landing cliente cambiar component
+        <Route //landing cliente 
           path="/:_id/:tableId/vista-cliente" 
           element={<LandingCustomer />}
+        />
+
+        <Route //Panel cliente
+          path="/:_id/:tableId/panel-cliente"
+          element={<ClientPanel />}
         />
 
         <Route // impresion de QR
@@ -52,7 +61,7 @@ const AppRoutes = () => {
         />
 
         <Route //resumen antes de pago
-          path="/:id/:tableId/check-out" 
+          path="restaurante/:id/:tableId/check-out" 
           element={<CheckOut/>}
         />
 
@@ -60,6 +69,13 @@ const AppRoutes = () => {
           path="/restaurante/log-in" 
           element={<LoginPage/>}
         />
+
+        <Route 
+          path="/payment-gateway"
+          element={<PaymentGateway></PaymentGateway>}
+        />
+
+
 
 
       </Routes>

@@ -42,10 +42,10 @@ Vaciar mesa
 
 Direcciones dummy: 
 
-http://localhost:3000/6220f66aeca2aa71f20c76d2/6226472b051e61b42f2cc712/customer-order
+http://localhost:3000/6220f66aeca2aa71f20c76d2/6228c196a4b6cea2db9796d7/customer-order
 
 
-http://localhost:3000/6220f66aeca2aa71f20c76d2/6226472b051e61b42f2cc712/vista-cliente
+http://localhost:3000/6220f66aeca2aa71f20c76d2/6228c196a4b6cea2db9796d7/vista-cliente
 
 
 //Mejorar codigo//
@@ -70,6 +70,14 @@ Lista de productos, negativooooo
 
 
 // cancelar order antes de ser aceptada por el camarero?? //modal intermedia con resumen
+
+
+
+
+DEPLOY IMPORTANTE
+
+
+cambiar BASEURL de UPDATE TOTAL (restauran routes)
 
 
 

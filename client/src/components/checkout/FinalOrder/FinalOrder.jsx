@@ -3,16 +3,46 @@ import { useParams } from "react-router-dom";
 import restaurantService from "../../../services/restaurant.services";
 import { AuthContext } from "../../../context/auth.context";
 import { useContext } from "react";
+import productService from "../../../services/product.services";
+import { Button } from "react-bootstrap";
+import { useNavigate } from 'react-router'
+import "./FinalOrder.css"
 
-const FinalOrder = () => {
+const FinalOrder = (props) => {
 
-  const { id, tableId } = useParams();
+  let navigate = useNavigate();
 
 
-  const [finalOrderData, setFinalOrderData] = useState([]);
-  const [orderDataNoIds, setOrderDataNoIds] = useState([]);
-  const [arrFinalOrder, setArrFinalOrder] = useState([]);
+
+  let { tableId, _id } = useParams();
+
+
+  if (tableId) {
+  } else {
+    _id = props._id;
+    tableId = props.tableId;
+
+  }
+
+
+  // ARRAY DE OBJETOS DE PRODUCTOS DE MENU: {name: cerveza, price: 1 ....}
   const [menuData, setMenuData] = useState([]);
+  // ARRAY DE OBJ: {Cerveza: "3", Oreja: "2"} CANTIDADES DE PEDIDO, VIENEN CON ID
+  const [finalOrderData, setFinalOrderData] = useState([]);
+  // ARRAY DE OBJ IGUAL QUE FINALORDERDATA PERO SIN IDS
+  const [orderDataNoIds, setOrderDataNoIds] = useState([]);
+  // ARRAY DE ARRAYS [Cerveza, cantidad, precio]
+  const [arrFinalOrder, setArrFinalOrder] = useState([]);
+
+
+  // useEffect(() => {
+  //   if (value.user != null) {
+  //     setTable({
+  //       ...table,
+  //       restaurantId: value.user._id,
+  //     })
+  //   }
+  // }, [value.user])
 
   const { isLoggedIn } = useContext(AuthContext);
   useEffect(() => {
@@ -24,11 +54,21 @@ const FinalOrder = () => {
   }, [finalOrderData]);
 
   useEffect(() => {
+    console.log(tableId, "table");
     restaurantService
       .checkTable(tableId)
-      .then((res) => setFinalOrderData(res.data.total.flat()))
+      .then((res) => {
+        console.log(res)
+        setMenuData(res.data.restaurantId[0].menu)
+        setFinalOrderData(res.data.total.flat())
+      })
       .catch((e) => console.log(e));
   }, []);
+
+  useEffect(() => {
+    props.getDataFromFinalOrder(arrFinalOrder)
+
+  }, [arrFinalOrder])
 
   const filterOutIds = (arrOfObjects) => {
     const objectWithoutId = [];
@@ -41,52 +81,65 @@ const FinalOrder = () => {
 
   const objToArr = (arrOfObjects) => {
     const arrOfOrders = [];
-    restaurantService
-      .getRestaurant({ _id: id })
-      .then((res) => setMenuData(res.data.menu))
-      .then(() => {
-        arrOfObjects.forEach((elm, index) => {
 
-          arrOfOrders.push(Object.entries(elm));
-  
-          menuData.forEach((menuItem) => {
-            for (const property in menuItem) {
-              
-              arrOfOrders[0].forEach((item, index) => {
-                
-                
-                console.log(menuItem.name, 'x', arrOfOrders[0][index][0])
-                
-                if (menuItem.name === arrOfOrders[0][index][0]) {
-                  arrOfOrders[0][index].length < 3 &&
-                    arrOfOrders[0][index].push(menuItem.price)
-                }
+    arrOfObjects.forEach((elm, idx) => {
 
-              })
+      arrOfOrders.push(Object.entries(elm))
 
+
+      menuData.forEach((menuItem) => {
+
+        for (const property in menuItem) {
+
+          arrOfOrders[idx].forEach((item, index) => {
+
+            if (menuItem.name === arrOfOrders[idx][index][0]) {
+
+
+              arrOfOrders[idx][index].length < 3 &&
+                arrOfOrders[idx][index].push(menuItem.price)
             }
-          });
-        });
+          })
+        }
       })
-      .then(() => setArrFinalOrder((arrOfOrders.flat())))
+    })
+
+    setArrFinalOrder((arrOfOrders.flat()))
+    props.getDataFromFinalOrder((arrOfOrders.flat()))
+
   }
+
+
+
+  const resetTable = () => {
+    productService
+      .resetTable(tableId)
+      .then((x) => navigate("/panel", { replace: true }))
+      .catch(e => console.log(e))
+
+  }
+
 
   return (
     <>
-      <h1>FINAL ORDER: PAGA CABRON</h1>
+      <h1>Total a pagar</h1>
 
       <form
         className="foodList"
+        id="formCheckOut"
         method="POST"
-        action="http://localhost:5005/api/update-total"
+        action={isLoggedIn ? `https://waiterhack.herpkuapp.com/api/update-total/${tableId}` : "foo"}
       >
+
+
         {arrFinalOrder.map((order) => {
           return (
             <div class="mb-3">
               <div class="input-group">
-                <p>{order[0]}, {order[1]}, {order[2]}</p>
-                <span class="input-group-text">{order[0]}</span>
-                <input
+
+
+
+                {isLoggedIn ? <><input
                   type="number"
                   class="form-control"
                   name={order[0]}
@@ -95,17 +148,39 @@ const FinalOrder = () => {
                   min="0"
                   max="100"
                 />
+                </>
+                  :
+                  <div className="topayForm">
+                    <span class="input-group-text opacity">{order[0]}</span>
+                    <input
+                      id="productUnits"
+                      type="number"
+                      class="form-control opacity"
+                      name={order[0]}
+                      aria-label="Dollar amount (with dot and two decimal places)"
+                      defaultValue={order[1]}
+                      min="0"
+                      max="100"
+                      readOnly
+                    />
+
                 <input type="hidden" value={tableId} name="id"></input>
-                <span class="input-group-text">€</span>
-                <span class="input-group-text">
-                  {/* {parseInt(order[1]) * order[2]} */}
+                
+                    <span className="input-group-text opacity" id="productTotal" > {parseInt(order[1]) * order[2]} </span>
+
+                <span className="input-group-text opacity">
+                  €
                 </span>
+                  </div>}
               </div>
             </div>
           );
         })}
-        {isLoggedIn ? <button>Acutualizar cuenta</button> : "boton del cliente"}
+        {isLoggedIn ? <><button type="submit" href="#">Actualizar cuenta</button> </>
+          : <Button className="btn-primary" href="/payment-gateway">Proceder a pago</Button>}
       </form>
+
+      {isLoggedIn && <Button onClick={resetTable}>Resetear mesa</Button>}
     </>
   );
 };

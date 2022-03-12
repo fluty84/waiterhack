@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import restaurantService from "../../services/restaurant.services";
 import mesaOn from "./mesa-on.png";
@@ -8,8 +7,11 @@ import mesaOff from "./mesa-off.png";
 import TableDetails from "../../components/TableDetails/TableDetails";
 import io from "socket.io-client";
 import { Box, Button, Modal, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
-const socket = io.connect("http://localhost:3001");
+
+const socket = io()
+
 
 import("./DayPanel.css");
 
@@ -18,6 +20,7 @@ const DayPanel = () => {
   const [tables, setTables] = useState();
   const [isOrder, setIsOrder] = useState(false);
   const [tableNumber, setTableNumber] = useState(0)
+  const [tableIdModal, setTableIdModal] = useState()
 
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
@@ -26,28 +29,36 @@ const DayPanel = () => {
   const handleClose = () => setOpen(false);
 
   socket.on("join_room", function (msg) {
-    console.log(msg, "en dayPanel");
-    console.log("this has been reached bitch");
     setIsOrder(msg);
   });
 
-  useEffect(() => {
+
+  useEffect(() => { //
     loadTables();
   }, [user]);
 
+  useEffect(() => {
+    const refresh = setInterval(() => {
+      loadTables()
+    }, 1000)
+
+    return () => clearInterval(refresh)
+  }, [user])
+
+
   const didMount = useRef(false);
 
-  useEffect(() => {
-    if (didMount.current) {
-      console.log("OIDO COCINA");
-      loadTables();
-    } else {
-      didMount.current = true;
-    }
-  }, [isOrder]);
+
+  // useEffect(() => {
+  //   if (didMount.current) {
+  //     loadTables();
+  //   } else {
+  //     didMount.current = true;
+  //   }
+  // }, [isOrder]);
 
   const loadTables = () => {
-    !user && console.log("el puto id", user);
+
     restaurantService
       .getRestaurant(user)
       .then((response) => setTables(response.data.tables))
@@ -57,17 +68,18 @@ const DayPanel = () => {
   return (
     <>
       <h1>Jornada </h1>
-      <Row className="justify-content-md-center">
+      <Row className="justify-content-center mb-5">
         {tables?.map((table, idx) => {
           return (
             <Col md={3} className="mesa" key={idx}>
-              <p>Mesa número {idx+1}</p>
+              <h3 className="h3-white">Mesa número {idx + 1}</h3>
               <input
                 type="image"
                 alt="mesa"
                 onClick={() => {
                   setModalData(table);
-                  setTableNumber(idx+1)
+                  setTableNumber(idx + 1)
+                  setTableIdModal(table._id)
                   handleOpen();
                 }}
                 src={!table.currentOrder.length ? mesaOff : mesaOn}
@@ -76,7 +88,7 @@ const DayPanel = () => {
           );
         })}
       </Row>
-      
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -93,9 +105,12 @@ const DayPanel = () => {
             order={modalData}
             number={tableNumber}
             handleClose={handleClose}
+            tableIdModal={tableIdModal}
           ></TableDetails>
         </Box>
       </Modal>
+
+      <Link to="/" className='link' ><Button className="btn-primary btn-back">Volver</Button></Link>
     </>
   );
 };

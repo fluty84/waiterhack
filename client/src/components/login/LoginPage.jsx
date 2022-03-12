@@ -5,8 +5,10 @@ import TextField from "@mui/material/TextField"
 import authService from "../../services/auth.services"
 import { AuthContext } from "../../context/auth.context"
 import { Link, useNavigate } from "react-router-dom"
+import { Container, FormGroup } from "react-bootstrap"
 
-import ("./LoginPage.css")
+
+import("./LoginPage.css")
 
 const LoginPage = () => {
   const [loginForm, setLoginForm] = useState({
@@ -19,6 +21,7 @@ const LoginPage = () => {
   const navigate = useNavigate()
 
   const { restaurant, password } = loginForm
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target
 
@@ -42,37 +45,45 @@ const LoginPage = () => {
   }
 
   return (
-    <div id="login-form">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <TextField
-            id="outlined-required-input"
-            label="Restaurant"
-            name="restaurant"
-            type="text"
-            onChange={handleInputChange}
-            value={restaurant}
-          />
-        </Form.Group>
+     
+    <Container >
+      <h1>WaiterHack</h1>
+      <div id="login-form">
+        <Form onSubmit={handleSubmit} id="login">
+          <FormGroup className="mb-3" controlId="formBasicEmail" variant="filled">
+            <TextField
+            
+              className='loginForm'
+              id="outlined-required-input"
+              label="Restaurant"
+              name="restaurant"
+              type="text"
+              onChange={handleInputChange}
+              value={restaurant}
+            />
+          </FormGroup>
+          <FormGroup className="mb-3" controlId="formBasicPassword" color="white">
+            <TextField
+      
+              id="outlined-password-input"
+              label="Password"
+              name="password"
+              type="password"
+              onChange={handleInputChange}
+              value={password}
+            />
+          </FormGroup>
+      <Button variant="primary" type="submit" id='login' className="login-btn">
+        Enviar
+      </Button>
+          
+        </Form>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <TextField
-            id="outlined-password-input"
-            label="Password"
-            name="password"
-            type="password"
-            onChange={handleInputChange}
-            value={password}
-          />
-        </Form.Group>
         
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
+      <Link className="button-block" to={'/restaurante/registro'}> ¿No tienes usuario? ¡Regístrate!</Link>
+      </div>
 
-        <Link to={'/restaurante/registro'}> ¿No tienes usuario? ¡Regístrate!</Link>
-      </Form>
-    </div>
+    </Container>
   )
 }
 

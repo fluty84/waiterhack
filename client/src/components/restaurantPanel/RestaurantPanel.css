@@ -1,0 +1,36 @@
+.btn-primary {
+    
+    border: solid #e9ecef !important;
+    color: #dee2e6 !important;
+    border-radius: 10px !important;
+    margin-top: 10px !important;
+
+}
+
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: grey !important;
+    border-color: white !important;
+    box-shadow: white !important;
+}
+
+.btn-primary:focus {
+    background-color: darkgray;
+}
+
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+    
+    color: inherit;
+    font-family: "Pangolin"!important;
+    font-weight: 500;
+}
+
+.resPanel{
+    margin-top: 500px;
+}
+
+.createTable {
+    width: 600px;
+}
+

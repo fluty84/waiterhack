@@ -1,10 +1,46 @@
-form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: 50px;
+.login-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
 }
 
-.textField {
-    margin: 20px;
+.login-form > form {
+    
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    background-color: rgba(249, 253, 250, 0.845);
+    max-width: 50%;
+}
+
+.mb-3 > div {
+  width: 100%;
+}
+
+h1{
+  text-align: center;
+  margin-top: 100px;
+  font-size: 4em;
+}
+
+.loginForm{
+  
+  border-color: white;
+}
+
+.form {
+  background-color: white;
+}
+
+.button-block {
+  display: block;
+  color:white;
+  margin: 5px
+}
+
+.login-btn {
+    border:2px solid #4a4f54!important;
+    color: #43464b!important;
+    border-radius: 10px;
+    margin-top: 10px;
 }

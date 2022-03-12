@@ -1,9 +1,9 @@
 
 import './App.css';
-//import io from 'socket.io-client'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import AppRoutes from './routes/AppRoutes';
 
-//const socket = io.connect('http://localhost:3001')
 
 
 

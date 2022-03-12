@@ -1,0 +1,94 @@
+
+
+form, .createForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 50px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px !important;
+    
+
+}
+
+.createForm{
+    margin-left: 10px !important;   
+}
+
+form label {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+li {
+    
+ 
+     list-style-type: none;
+   border-radius: 10px;
+ width: 100%;
+       align-items: center;
+       padding: 15px;
+
+}
+
+#create-order-list p{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+
+  
+}
+
+li  input {
+   
+    width:30px;
+    border: none;
+    background-color: transparent;
+    color: white
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: transparent;
+    border-color: white;
+
+
+}
+.p-3 {
+    padding: 1em !important;
+    border-radius: 10px;
+}
+
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: transparent !important;
+    border-color: white !important;
+    box-shadow: white !important;
+}
+
+.btn-primary:focus {
+    border-color: white ;
+    box-shadow: 0 5px 5px rgba(228, 217, 214) !important;
+    background-color: transparent 
+}
+
+.btn-primary:focus:hover {
+    border-color: white ;
+    box-shadow: 0 5px 5px rgba(228, 217, 214) !important;
+  
+}
+
+
+
+#titleMenu {
+    margin-top: 50px;
+}
+
+.unit {
+    border: 1px solid white;
+    border-radius: 4px;
+}

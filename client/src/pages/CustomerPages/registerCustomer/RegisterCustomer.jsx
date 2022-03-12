@@ -1,18 +1,16 @@
 
-import { FormControl, Input, InputLabel, FormHelperText, Container, Grid, TextField, Button } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { Grid, TextField, Button } from '@mui/material'
+import { useState } from 'react'
 import { Form } from 'react-bootstrap'
-import restaurantService from '../../../services/restaurant.services'
 import authService from '../../../services/auth.services'
 import { useNavigate, useParams } from 'react-router-dom'
 
-
-
+import './registerCustomer.css'
 
 const RegisterCustomer = () => {
 
     const navigate = useNavigate()
-    const {tableId} = useParams()
+    const {tableId, _id} = useParams()
 
     const [customerData, setCustomerData] = useState(
         {
@@ -21,10 +19,7 @@ const RegisterCustomer = () => {
         }
     )
 
-
-
     const { customer, password } = customerData
-
 
     const handleInputChange = e => {
 
@@ -43,25 +38,25 @@ const RegisterCustomer = () => {
         authService
             .tableLogin(customerData, tableId)
             .then(() => {
-               navigate('/')
+                navigate(`/${_id}/${tableId}/panel-cliente`, { replace: true })
             })
         
     }
 
     return (
 
-
         <>
-            <Grid container>
+            <Grid container md={8} className='gridForm jusfy-content-center'>
 
-                <h2>Indica un username y un password para registrarte</h2>
+                <h3>Crea un nombre y clave de sesisón para pedir</h3>
+                <p>*el nombre y clave se borrarán al pagar la cuenta</p>
 
                 <Form onSubmit={handleSubmit} >
 
                     <TextField className='textField'
                         required
 
-                        label="Customer"
+                        label="Nombre"
                         name="customer"
                         type="text"
                         value={customer}
@@ -71,20 +66,17 @@ const RegisterCustomer = () => {
                     <TextField className='textField'
                         required
 
-                        label="password"
+                        label="Clave de tu visita"
                         name="password"
                         type="password"
                         value={password}
                         onChange={handleInputChange}
                     />
-                    <Button variant="outlined" size="medium" type='submit' >
+                    <Button className='login-btn' variant="outlined" size="medium" type='submit' >
                         Enviar
                     </Button>
                 </Form>
             </Grid>
-
-
-
 
         </>
 

@@ -2,3 +2,23 @@
 label[data-shrink=false]+.MuiInputBase-formControl .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
  margin-left: 40%;
 }
+
+ #input {
+    margin: 0px;
+}
+
+
+element.style {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.uploadFile {
+    width: 215px;
+    margin-top: 20px;
+}
+
+#selectors {
+    display:flex;
+}

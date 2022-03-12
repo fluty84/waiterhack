@@ -1,0 +1,28 @@
+h3 {
+    text-align: center;
+    margin: 5px;
+}
+
+.gridForm > form {
+    
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    background-color: rgba(249, 253, 250, 0.845);
+    max-width: 50%;
+}
+
+.gridForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+}
+
+.login-btn {
+    border:2px solid #4a4f54!important;
+    color: #43464b!important;
+    border-radius: 10px;
+    margin-top: 10px;
+}

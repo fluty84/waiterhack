@@ -1,4 +1,6 @@
+import { Button} from "@mui/material";
 import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import restaurantService from "../../services/restaurant.services";
 
@@ -11,7 +13,7 @@ const MenuList = ({ newProduct }) => {
 
   useEffect(() => {
     loadMenu();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     loadMenu();
@@ -27,15 +29,19 @@ const MenuList = ({ newProduct }) => {
   return (
     <>
       <ul>
-        Lista de productos
+        <h3>Lista de productos</h3>
         {products.map((product) => {
           return (
             <li key={product._id}>
-              <p>{product.name}</p> {product.price}
+              <p>{product.name} {product.price}€</p> 
+              <hr></hr>
             </li>
+            
           );
         })}
       </ul>
+      <Link to="/" className='link' ><Button className="btn-primary btn-back">Volver</Button></Link>
+
     </>
   );
 };

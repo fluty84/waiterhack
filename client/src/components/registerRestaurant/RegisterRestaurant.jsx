@@ -1,24 +1,21 @@
-import { FormControl, Input, InputLabel, FormHelperText, Container, Grid, TextField, Button } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { Grid, TextField, Button } from '@mui/material'
+import { useState } from 'react'
 import { Form } from 'react-bootstrap'
 import restaurantService from '../../services/restaurant.services'
-import ('./RegisterRestaurant.css')
-
-
-
+import('./RegisterRestaurant.css')
 
 const RegisterRestaurant = () => {
 
-const [restaurantData, setRestarantData] = useState(
-    {
-        restaurant:'', 
-        email:'', 
-        address:'',
-        password:''
-    }
-)
+    const [restaurantData, setRestarantData] = useState(
+        {
+            restaurant: '',
+            email: '',
+            address: '',
+            password: ''
+        }
+    )
 
-const {restaurant, email, address, password} = restaurantData
+    const { restaurant, email, address, password } = restaurantData
 
     const handleInputChange = e => {
 
@@ -37,68 +34,66 @@ const {restaurant, email, address, password} = restaurantData
             .saveRestaurant(restaurantData)
             .then(({ data }) => {
                 console.log(data)
-
             })
-
             .catch(err => console.log(err))
     }
 
-    
-return (
+
+    return (
 
 
-<Grid container>
-    
-    <h2>Registra tu Restaurante </h2>
+        <Grid container className='login-form'>
 
-        <Form onSubmit={handleSubmit} >
-        
-            <TextField className='textField'
-                required
-                id="outlined-required"
-                label="Nombre del Restaurante"
-                name="restaurant"
-                type="text"
-                value={restaurant}
-                onChange={handleInputChange}
-            />
+            <h2>Registra tu Restaurante </h2>
 
-            <TextField className='textField'
-                required
-                id="outlined-required"
-                label="password"
-                name="password" 
-                type="password"
-                value={password}
-                onChange={handleInputChange}
-            />
+            <Form onSubmit={handleSubmit} className='form'>
 
-            <TextField className='textField'
-                required
-                id="outlined-required"
-                label="email"
-                name="email"
-                type="email"
-                value={email}
-                onChange={handleInputChange}
-            />
+                <TextField className='textField'
+                    required
+                    id="outlined-required"
+                    label="Nombre del Restaurante"
+                    name="restaurant"
+                    type="text"
+                    value={restaurant}
+                    onChange={handleInputChange}
+                />
 
-            <TextField className='textField'
-                required
-                id="outlined-required"
-                label="dirección"
-                name="address"
-                type="text"
-                value={address}
-                onChange={handleInputChange}
-            />
-    
-            <Button variant="outlined" size="medium" type='submit' >
-                Enviar
-            </Button>
-    </Form>
-</Grid>
-)
+                <TextField className='textField'
+                    required
+                    id="outlined-required"
+                    label="password"
+                    name="password"
+                    type="password"
+                    value={password}
+                    onChange={handleInputChange}
+                />
+
+                <TextField className='textField'
+                    required
+                    id="outlined-required"
+                    label="email"
+                    name="email"
+                    type="email"
+                    value={email}
+                    onChange={handleInputChange}
+                />
+
+                <TextField className='textField'
+                    required
+                    id="outlined-required"
+                    label="dirección"
+                    name="address"
+                    type="text"
+                    value={address}
+                    onChange={handleInputChange}
+                />
+
+                <Button  className='login-btn ' variant="outlined" size="medium" type='submit' >
+                    Enviar
+                </Button>
+            </Form>
+        </Grid>
+    )
 
 }
 

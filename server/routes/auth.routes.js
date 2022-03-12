@@ -48,9 +48,7 @@ router.post('/loginRestaurant', (req, res, next) => {
                 res.status(401).json({ message: "Unable to authenticate the user" });
             }
         })
-        .catch(err => {
-            console.log(err)
-            res.status(500).json({ message: "Internal Server Error" })
+        .catch(err => {res.status(500).json({ message: "Internal Server Error" })
         })
 })
 
@@ -99,7 +97,6 @@ router.post('/loginTable', (req, res, next) => {
 
         })
         .catch(err => {
-            console.log(err)
             res.status(500).json({ message: "Internal Server Error" })
         })
 

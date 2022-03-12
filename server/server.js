@@ -1,35 +1,59 @@
 const app = require("./app");
-
-// ℹ️ Sets the PORT for our app to have access to it. If no env has been set, we hard code it to 3000
 const PORT = process.env.PORT || 5005;
 
-const http = require("http");
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server, {
+const server = app.listen(PORT, () => {
+  console.log("Listening on port: " + PORT);
+})
+
+const io = require('socket.io')(server, {
   cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
+    origin: process.env.ORIGIN || "https://waiterhack.herokuapp.com",
+    methods: ["GET", "POST"]
   },
-});
+})
 
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
-  
   socket.on('join_room', (data) => {
-  
     socket.join(data)
-    console.log(data, socket.id, 'paso por el server')
-    io.emit('join_room',  data); // This will emit the event to all connected sockets
+    io.emit('join_room', data)
   })
-  
 })
 
 
-server.listen(3001, () => {
-  console.log(`Server Socket listening on port 3001`);
-});
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port http://localhost:${PORT}`);
-})
+// ---------
+
+
+
+// const app = require("./app");
+// const PORT = process.env.PORT || 5005;
+
+// const http = require("http");
+// const socketServer = http.createServer(app);
+// const { Server } = require("socket.io");
+// const io = new Server(socketServer, {
+//   cors: {
+//     origin: process.env.ORIGIN || "https://waiterhack.herokuapp.com",
+//     //"http://localhost:3000" local,
+//     methods: ["GET", "POST"],
+//   },
+// })
+
+// io.on("connection", (socket) => {
+//   console.log("a user connected", socket.id);
+
+//   socket.on('join_room', (data) => {
+//     socket.join(data)
+//     io.emit('join_room', data); // This will emit the event to all connected sockets
+//   })
+
+// })
+
+// app.listen(PORT, () => {
+//   console.log(`Server listening on port ${PORT}`);
+// })
+
+// socketServer.listen(PORT, () => {
+//   console.log(`Sockets on port ${PORT}`);
+// }

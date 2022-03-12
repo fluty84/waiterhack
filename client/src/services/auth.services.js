@@ -4,7 +4,7 @@ class AuthService {
 
     constructor() {
         this.api = axios.create({
-            baseURL: 'http://localhost:5005/api'
+            baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5005/api'
         })
 
             this.api.interceptors.request.use((config) => {
@@ -33,8 +33,6 @@ class AuthService {
     tableLogin(costumerData, tableId) {
 
         const {password, customer} = costumerData
-
-        console.log(password, customer, tableId)
 
         return this.api.post(`/auth/new-customer/${tableId}`, {password, customer})
     }

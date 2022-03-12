@@ -1,6 +1,6 @@
-import { InputLabel, Container, TextField, Button, Select, MenuItem } from '@mui/material'
+import { InputLabel, TextField, Button, Select, MenuItem } from '@mui/material'
 import { useContext, useState } from 'react'
-import { Form } from 'react-bootstrap'
+import { Form, Option } from 'react-bootstrap'
 import { AuthContext } from '../../context/auth.context'
 import productService from '../../services/product.services'
 import uploadService from '../../services/upload.service'
@@ -12,9 +12,6 @@ const FormMenu = () => {
 const { isLoggedIn } = useContext(AuthContext)
 
 const { user } = useContext(AuthContext)
-
-console.log('user is logged', isLoggedIn, user._id)
-
 
 const [productData, setproductData] = useState(
     {
@@ -31,15 +28,12 @@ const [loadingImage, setLoadingImage] = useState(false)
 
 const [newProduct, setNewProduct] = useState(false)
 
-const { name, price, category, allergens, restaurantId, imageUrl } = productData
+const { name, price, category, allergens} = productData
 
 const handleInputChange = e => {
 
     const { value, name } = e.target
-
-    console.log(name)
-    console.log(value)
-
+    
     setproductData({
         ...productData,
         [name]: value
@@ -50,11 +44,10 @@ const toggleNew = () => !newProduct ? setNewProduct(true) : setNewProduct(false)
 
 const handleSubmit = e => {
     e.preventDefault()
-
+    setproductData({ ...productData, restaurantId: user._id })
     productService
         .saveProduct(productData)
         .then(({ data }) => {
-            console.log(data)
             toggleNew()
         })
         .catch(err => console.log(err))
@@ -87,8 +80,10 @@ const uploadProductImage = e => {
 
             <h4>Nuevo producto </h4>
             <Form onSubmit={handleSubmit} >
-
-                <TextField className='textField'
+                <Form.Group>
+                <Form.Label>Nombre del Producto</Form.Label>
+                
+                    <Form.Control className='textField' id="input"
                     required
                     //className="outlined-required"
                     label="Nombre del producto"
@@ -96,8 +91,11 @@ const uploadProductImage = e => {
                     type="text"
                     value={name}
                     onChange={handleInputChange}
-                />
-                <TextField className='textField'
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label> Precio (€) </Form.Label>
+                <Form.Control className='textField' id="input"
                     required
                     //className="outlined-required"
                     label="Precio"
@@ -106,9 +104,10 @@ const uploadProductImage = e => {
                     value={price}
                     onChange={handleInputChange}
                 />
-
-
-                <TextField className='uploadFile'
+                   
+                </Form.Group>
+                <Form.Group>
+                <Form.Control className='uploadFile'
 
                     //className="outlined-required"
                     label="Imagen"
@@ -116,41 +115,47 @@ const uploadProductImage = e => {
                     type="file"
 
                     onChange={uploadProductImage}
-                />
-
-                <InputLabel id="categorySelect">Categoria</InputLabel>
-                <Select
+                    />
+                </Form.Group>
+                <div id="selectors">
+                <Form.Group>
+                    
+                <Form.Label id="categorySelect">Categoria</Form.Label>
+                <Form.Select
                     size='small'
-                    labelId="categorySelect"
+                    
                     id="categorySelect"
                     name='category'
                     value={category}
                     label="category"
                     onChange={handleInputChange}
-                >
-                    <MenuItem value={'comida'}>Comida</MenuItem>
-                    <MenuItem value={'bebida'}>Bebida</MenuItem>
-                </Select>
+                    >
+              
+                    <option value={'comida'}>Comida</option>
+                            <option value={'bebida'}>Bebida</option>
+                     
+                </Form.Select>
+                </Form.Group>
+        <Form.Group>
+                <Form.Label id="categorySelect">Alérgenos</Form.Label>
 
-                <InputLabel id="categorySelect">Alérgenos</InputLabel>
-
-                <Select
+                <Form.Select
                     size='small'
-                    labelId="allegensSelect"
+                   
                     id="allegensSelect"
                     name='allergens'
                     value={allergens}
                     label="allergens"
                     onChange={handleInputChange}
                 >
-                    <MenuItem value={'frutos secos'}>Frutos Secos</MenuItem>
-                    <MenuItem value={'pescado'}>Pescado</MenuItem>
-                    <MenuItem value={'cruzcampo'}>Cruz-Campo</MenuItem>
+                    <option value={'frutos secos'}>Frutos Secos</option>
+                    <option value={'pescado'}>Pescado</option>
+                    <option value={'cruzcampo'}>Cruz-Campo</option>
 
-                </Select>
-
-
-                <Button variant="outlined" size="small" type='submit' disabled={loadingImage}  >{loadingImage ? 'Cargando imagen' : 'Añadir producto'}
+                </Form.Select>
+                </Form.Group>
+                </div>
+                <Button variant="outlined" size="small" className= "btn-primary" type='submit' disabled={loadingImage}  >{loadingImage ? 'Cargando imagen' : 'Añadir producto'}
 
                 </Button>
             </Form>

@@ -1,25 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../context/auth.context";
-import restaurantService from "../../services/restaurant.services";
-import { Fab } from "@mui/material";
-import { Form, Button } from "react-bootstrap";
-import productService from "../../services/product.services";
-import { useParams } from "react-router-dom";
-
-import io from "socket.io-client";
-
-const socket = io.connect("http://localhost:3001");
-
+import { useEffect, useState } from "react"
+import { useContext } from "react"
+import restaurantService from "../../services/restaurant.services"
+import { Form, Button } from "react-bootstrap"
+import { useParams } from "react-router-dom"
+import "./CreateOrder.css"
 const CreateOrder = (props) => {
- 
-  const [products, setProducts] = useState([]);
-  const [productNum, setProductNum] = useState([props.isUpdated]);
-  const [orderForm, setOrderForm] = useState({
-  });
-  const [userName, setUsername] = useState("Popino");
+
+  const [products, setProducts] = useState([])
+  const [orderForm, setOrderForm] = useState({})
 
   useEffect(() => {
-    loadMenu();
+    loadMenu()
 
     products.map((product) => {
       const { name } = product
@@ -29,67 +20,87 @@ const CreateOrder = (props) => {
       })
     })
 
-  }, []);
+  }, [])
 
-  const { _id, tableId } = useParams();
+  const { _id, tableId } = useParams()
 
   const loadMenu = () => {
     restaurantService
       .getRestaurant({ _id })
       .then((response) => setProducts(response.data.menu))
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   const handleInputChange = (arg) => {
     if (arg.target.value < 0 || arg.target.value > 50) {
-      arg.target.value = 0;
+      arg.target.value = 0
     }
-    const { name, value } = arg.target;
+    const { name, value } = arg.target
 
     setOrderForm({
       ...orderForm,
       [name]: value,
       id: tableId, //TABLE ID
-    });
-  };
+    })
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    props.orderSent();
-    props.receiveOrder(orderForm);
+    props.orderSent()
+    props.receiveOrder(orderForm)
     setOrderForm(prevState => {
       Object.keys(prevState).forEach(el => (prevState = { ...prevState, [el]: 0 }))
-      return prevState;
+      return prevState
     })
-  };
+  }
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        Lista de productos Pide
+      
+      <p id="titleMenu">   Lista de productos</p>
+      <Form className="createForm" onSubmit={handleSubmit}>
+     
+      
+    
         {products.map((product) => {
           return (
-            <li key={product._id}>
-              <p>{product.name}</p> {product.price}
-              <input
-                type="number"
-                name={product.name}
-                value={orderForm[product.name]}
-                onChange={handleInputChange}
-              ></input>
-              <input
-                type="hidden"
-                name="id"
-                value="621f984c745ab17740b49361" //
-              ></input>
-            </li>
-          );
+
+       
+
+              <li className="create-order-list" key={product._id}>
+                <label htmlFor={product._id}>
+                
+                    <p>{product.name}   {product.price}€
+                    </p>
+           
+                 <div>
+                    <input 
+                      className="unit"
+                      id={product._id}
+                      type="number"
+                      name={product.name}
+                      value={orderForm[product.name]}
+                      onChange={handleInputChange}
+                  ></input> <span> Unidades</span> 
+                </div>  
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="621f984c745ab17740b49361" //
+                    ></input>
+              
+                </label>
+              <hr></hr>
+              </li>
+    
+          )
         })}
-        <Button type="submit">Enviar orden</Button>
+          <Button type="submit" size="sm" variant="primary" className="shadow p-3">Enviar orden</Button>
+       
       </Form>
     </>
-  );
-};
+  )
+}
 
-export default CreateOrder;
+export default CreateOrder

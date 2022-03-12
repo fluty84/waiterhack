@@ -3,7 +3,9 @@ import restaurantService from "../../../services/restaurant.services";
 import { useParams } from "react-router-dom";
 import Basket from "../../../components/basket/Basket";
 import CreateOrder from "../../../components/CreateOrder/CreateOrder";
-import { Grid, Item } from "@mui/material";
+import { Row, Col, Container } from "react-bootstrap";
+import "./ClientView.css"
+import NavbarClient from "../../../components/navbarClient/NavbarClient";
 
 const ClientView = () => {
   const [restaurant, setRestarant] = useState();
@@ -40,7 +42,7 @@ const ClientView = () => {
     setOrderForm({})
     //setTicket({})
     setIsTicketModified(true)
-    console.log('ahora order es ', orderForm)
+  
   }
 
   const toggleTicket = () =>{
@@ -50,17 +52,18 @@ const ClientView = () => {
 
   return (
     <>
-      <h1>Haz tu pedido</h1>
-
-      <Grid container spacing={2}>
-        <Grid item xs={8}>
+     
+      <h1 id="titleCustomer">Haz tu pedido</h1>
+<Container>
+      <Row container spacing={2}>
+        <Col md="6" xs="12">
           <CreateOrder 
           orderSent={orderSent}
             receiveOrder={receiveOrder}
        
           ></CreateOrder>
-        </Grid>
-        <Grid item xs={4}>
+        </Col>
+        <Col item md="6">
           <Basket
             id={id}
             isOrderSent={isOrderSent}
@@ -70,8 +73,9 @@ const ClientView = () => {
             isTicketModified={isTicketModified}
             toggleTicket={toggleTicket}
           ></Basket>
-        </Grid>
-      </Grid>
+        </Col>
+        </Row>
+      </Container>
     </>
   );
 };
