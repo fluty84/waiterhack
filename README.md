@@ -1,10 +1,7 @@
 # PROJECT IRON WAITER
 
->
+A program for Restaurants based on socket.io, node, React and Express. To be able to receive orders directly from the tables in real time, validate them and add them to the final account.
 
-## Main Points:
-
-///////
 
 ## Express endpoint table
 
@@ -48,5 +45,3 @@
 | POST | `/api/auth/loginTable` | Table Log-in |✓ |
 
 |
-
-[texto a mostrar](https://disney.com)
