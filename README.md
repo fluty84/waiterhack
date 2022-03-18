@@ -39,10 +39,10 @@ deployed: https://waiterhack.netlify.app/
 | POST | `/api/auth/loginRestaurant` | Restaurant Log-in |✓ |
 | POST | `/api/auth/loginTable` | Table Log-in |✓ |
 
-|--------------------NEXT STEPS------------------|
+## NEXT STEPS ##
 
-Deploy whith socket.io (only working on local)
-Delete tables and products
-Improve UI
-Add restaurat sell stats
-Add bulb advisor with IOT
+Deploy whith socket.io (only working on local).
+Delete tables and products.
+Improve UI.
+Add restaurat sell stats.
+Add bulb advisor with IOT.
