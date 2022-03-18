@@ -2,6 +2,7 @@
 
 A program for Restaurants based on socket.io, node, React and Express. To be able to receive orders directly from the tables in real time, validate them and add them to the final account.
 
+deployed: https://waiterhack.netlify.app/ 
 
 ## Express endpoint table
 
