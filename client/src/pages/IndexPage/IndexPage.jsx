@@ -1,14 +1,13 @@
 import RestaurantPanel from "../../components/restaurantPanel/RestaurantPanel";
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import LoginPage from "../../components/login/LoginPage";
 
 import './IndexPage.css'
 
 const IndexPage = () => {
 
   const value = useContext(AuthContext);
-  const navigate = useNavigate()
 
   return (
     <>
@@ -17,7 +16,7 @@ const IndexPage = () => {
           <RestaurantPanel></RestaurantPanel>
         </>
       ) :
-        navigate('/restaurante/log-in')
+        <LoginPage></LoginPage>
       }
     </>
   );

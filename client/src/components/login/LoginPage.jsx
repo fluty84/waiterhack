@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button"
 import TextField from "@mui/material/TextField"
 import authService from "../../services/auth.services"
 import { AuthContext } from "../../context/auth.context"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate} from "react-router-dom"
 import { Container, FormGroup } from "react-bootstrap"
 
 
@@ -19,7 +19,7 @@ const LoginPage = () => {
   const { storeToken, authenticateUser } = useContext(AuthContext)
 
   const navigate = useNavigate()
-
+  
   const { restaurant, password } = loginForm
   
   const handleInputChange = (e) => {

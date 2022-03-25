@@ -11,6 +11,8 @@ const LoginCustomer = ({ tablePassword }) => {
 
     const { tableId, _id } = useParams()
 
+    const [sendButton, setSendButton] = useState('Enviar')
+
     const [customerData, setCustomerData] = useState(
         {
             customer: "",
@@ -35,6 +37,8 @@ const LoginCustomer = ({ tablePassword }) => {
 
         if (customerData.password === tablePassword) {
             navigate(`/${_id}/${tableId}/panel-cliente`, { replace: true })
+        } else{
+            setSendButton('password erroneo')
         }
     }
 
@@ -68,7 +72,7 @@ const LoginCustomer = ({ tablePassword }) => {
                         onChange={handleInputChange}
                     />
                     <Button className='login-btn' variant="outlined" size="medium" type='submit' >
-                        Enviar
+                        {sendButton}
                     </Button>
                 </Form>
             </Grid>

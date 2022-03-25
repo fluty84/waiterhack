@@ -4,11 +4,9 @@ import { useContext, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { red } from '@mui/material/colors'
 
 import './RestaurantPanel.css'
 
-const color = red[50]
 
 const RestaurantPanel = () => {
   const value = useContext(AuthContext);

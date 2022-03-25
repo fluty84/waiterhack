@@ -139,7 +139,11 @@ const FinalOrder = (props) => {
 
 
 
-                {isLoggedIn ? <><input
+                {isLoggedIn ? 
+                
+                <div className="topayForm" >
+                <span class="input-group-text opacity">{order[0]}</span>
+                <input
                   type="number"
                   class="form-control"
                   name={order[0]}
@@ -148,7 +152,7 @@ const FinalOrder = (props) => {
                   min="0"
                   max="100"
                 />
-                </>
+                </div>
                   :
                   <div className="topayForm">
                     <span class="input-group-text opacity">{order[0]}</span>
@@ -166,11 +170,8 @@ const FinalOrder = (props) => {
 
                 <input type="hidden" value={tableId} name="id"></input>
                 
-                    <span className="input-group-text opacity" id="productTotal" > {parseInt(order[1]) * order[2]} </span>
-
-                <span className="input-group-text opacity">
-                  €
-                </span>
+                <span className="input-group-text opacity" id="productTotal" > {parseInt(order[1]) * order[2]} € </span>
+                
                   </div>}
               </div>
             </div>

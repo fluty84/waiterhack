@@ -1,8 +1,13 @@
 # Dependency directory
 node_modules
+<<<<<<< HEAD
 node_modules/
 /node_modules
 
+=======
+/node_modules
+node_modules/
+>>>>>>> 7660ad64a343d74fb7df8c09c084894e4033e3c3
 
 # Debug log from npm
 npm-debug.log

@@ -10,7 +10,6 @@ import LandingCustomer from "../pages/CustomerPages/landingCostumer/Landing-Cost
 import CheckOut from "../pages/checkOut/CheckOut";
 import LoginPage from "../components/login/LoginPage";
 import ClientPanel from "../pages/CustomerPages/clientPanel/ClientPanel";
-import NavbarClient from "../components/navbarClient/NavbarClient";
 import PaymentGateway from "../pages/paymentGateway/PaymentGateway";
 
 
@@ -65,17 +64,10 @@ const AppRoutes = () => {
           element={<CheckOut/>}
         />
 
-        <Route // Logueo Restaurante
-          path="/restaurante/log-in" 
-          element={<LoginPage/>}
-        />
-
         <Route 
           path="/payment-gateway"
-          element={<PaymentGateway></PaymentGateway>}
+          element={<PaymentGateway/>}
         />
-
-
 
 
       </Routes>
