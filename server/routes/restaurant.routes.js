@@ -118,7 +118,7 @@ router.post("/create-product", (req, res) => {
 
 // Delete Product
 
-router.delete("/delete-product", (req, res) => {
+router.post("/delete-product", (req, res) => {
   const { _id } = req.body;
 
   Product
@@ -128,7 +128,7 @@ router.delete("/delete-product", (req, res) => {
 
 });
 
-// create table
+// Create table
 
 router.post("/create-table", isAuthenticated, (req, res) => {
   //const { password, customer } = req.body;
@@ -146,8 +146,21 @@ router.post("/create-table", isAuthenticated, (req, res) => {
     .catch((err) => res.status(500).json(err))
 
 });
+// Delete table 
 
-// create order
+router.post("/delete-table", isAuthenticated, (req, res) => {
+
+  const {tableId} = req.body
+
+  console.log(req.body, '----->')
+
+  Table
+    .findByIdAndDelete(tableId)
+    .then((result) => res.status(201).json({ result }))
+    .catch((err) => res.status(500).json(err))
+})
+
+//Create order
 
 router.post("/send-order", (req, res) => {
   const { order } = req.body;
@@ -159,7 +172,7 @@ router.post("/send-order", (req, res) => {
 
 });
 
-//
+// Reset Table
 router.post("/reset-table", (req, res) => {
 
 
@@ -239,15 +252,19 @@ router.delete("/delete-total", (req, res) => {
 
 //Update total
 
-router.post("/update-total/:restaurantId", (req, res) => {
+router.post("/update-total", (req, res) => {
 
-  const { id } = req.body;
-  const order = req.body;
-  const { restaurantId } = req.params
+  const { tableId } = req.body
+  const {arrFinalOrder} = req.body;
 
-  Table.findOneAndUpdate(id[0], { total: order })
-    .then((result) => res.redirect(`https://waiterhack.netlify.app/restaurante/${restaurantId}/${id[0]}/check-out`)) //cambia en deploy
-    .catch((err) => res.status(500).json(err))
+  const order = arrFinalOrder.map(elm => {
+    let name = elm[0]
+    return [{ [name]: elm[1] }]
+  });
+
+  Table.findByIdAndUpdate(tableId, { total: order })
+    .then(result =>  console.log(result))
+    .catch(err => res.status(500).json(err))
 
 });
 
