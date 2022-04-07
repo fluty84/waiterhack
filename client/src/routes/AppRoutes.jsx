@@ -8,7 +8,6 @@ import ClientView from "../pages/CustomerPages/clientView/ClientView";
 import QrPrint from "../pages/qrPrint/QrPrint";
 import LandingCustomer from "../pages/CustomerPages/landingCostumer/Landing-Costumer";
 import CheckOut from "../pages/checkOut/CheckOut";
-import LoginPage from "../components/login/LoginPage";
 import ClientPanel from "../pages/CustomerPages/clientPanel/ClientPanel";
 import PaymentGateway from "../pages/paymentGateway/PaymentGateway";
 

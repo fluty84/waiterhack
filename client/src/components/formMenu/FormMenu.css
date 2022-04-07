@@ -7,7 +7,6 @@ label[data-shrink=false]+.MuiInputBase-formControl .css-1t8l2tu-MuiInputBase-inp
     margin: 0px;
 }
 
-
 element.style {
     display: flex;
     flex-direction: column;
@@ -22,3 +21,14 @@ element.style {
 #selectors {
     display:flex;
 }
+
+.newProduct {
+    margin-top: 10px;
+    margin-bottom: 80px;
+}
+
+.new-btn {
+    background-color: rgba(255, 255, 255, 0.228)!important;
+    font-weight: 600!important;
+}
+

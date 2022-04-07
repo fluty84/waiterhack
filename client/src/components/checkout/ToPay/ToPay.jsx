@@ -1,4 +1,5 @@
 import React from "react";
+import './ToPay.css'
 
 const ToPay = ({totalData}) => {
 
@@ -10,9 +11,9 @@ const ToPay = ({totalData}) => {
    const totalSum = totalProduct.reduce((prev, curr) => prev+curr, 0)
 
     return (
-        <>
-            <h1> <p>Total a pagar es:</p>{totalSum} €</h1>
-        </>
+        <div className="container">
+            <h1 className="totalField"> <p>Total cuenta:</p>{totalSum} €</h1>
+        </div>
     )
 }
 

@@ -4,7 +4,6 @@ form, .createForm {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin: 50px;
     justify-content: center;
     align-items: center;
     margin-top: 50px !important;

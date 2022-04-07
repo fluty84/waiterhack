@@ -23,6 +23,10 @@ class ProductService {
     return this.api.post("/create-product", product);
   };
 
+  deleteProduct = (product) => {
+    return this.api.post("/delete-product", {_id: product})
+  }
+
   getAll = () => {
     const { user } = useContext(AuthContext);
 
@@ -40,7 +44,6 @@ class ProductService {
 
 
   displayOrder = (id) => {
-    console.log("this display is: " + id);
     return this.api.get(`/${id}/display-order`);
   };
 

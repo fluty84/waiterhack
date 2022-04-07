@@ -21,7 +21,7 @@ const RestaurantPanel = () => {
     <>
       <Row className="justify-content-md-center mt-5 resPanel">
         <Col md={6} className="mb-5">
-          <h1>Bar Cenas</h1>
+          <h1 className="yellow-title">Bar Cenas</h1>
         </Col>
         <Row className="justify-content-md-center mt-5">
           <Col className="modifyMenuBtn" md={6}>

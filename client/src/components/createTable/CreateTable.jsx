@@ -76,7 +76,7 @@ const CreateTable = ({ handleClose }) => {
               -
             </Fab>
             <input
-            className="newTableInput"
+              className="newTableInput"
               type="number"
               onChange={handleChange}
               name="value"

@@ -24,6 +24,7 @@ body {
   border-radius: 10px;
   margin-top: 10px;
   text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.413);
 }
 
 h1{
@@ -50,5 +51,6 @@ p {
     position: absolute!important;
     bottom: 80px;
     left: 100px;
+    background-color: rgba(255, 255, 255, 0.523);
 }
 

@@ -4,16 +4,19 @@ import { AuthContext } from "../../context/auth.context";
 import restaurantService from "../../services/restaurant.services";
 import mesaOn from "./mesa-on.png";
 import mesaOff from "./mesa-off.png";
+import mesaOpen from "./mesa-open.png"
 import TableDetails from "../../components/TableDetails/TableDetails";
 import io from "socket.io-client";
 import { Box, Button, Modal, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 
 const socket = io()
 
 
 import("./DayPanel.css");
+
+
 
 const DayPanel = () => {
   const { user } = useContext(AuthContext);
@@ -28,12 +31,29 @@ const DayPanel = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const { isLoggedIn, isLoading } = useContext(AuthContext)
+  const navigate = useNavigate()
+
   socket.on("join_room", function (msg) {
     setIsOrder(msg);
   });
 
+  function PrivateRoute() {
 
-  useEffect(() => { //
+    
+
+    if (isLoading) {
+      return "cargando"
+    }
+
+    if (!isLoggedIn) {
+      console.log('intruso')
+      return <Navigate to="/" />
+    }
+
+  }
+
+  useEffect(() => { 
     loadTables();
   }, [user]);
 
@@ -59,6 +79,10 @@ const DayPanel = () => {
 
   const loadTables = () => {
 
+    if (!isLoggedIn) {
+      navigate("/")
+    }
+
     restaurantService
       .getRestaurant(user)
       .then((response) => setTables(response.data.tables))
@@ -82,7 +106,8 @@ const DayPanel = () => {
                   setTableIdModal(table._id)
                   handleOpen();
                 }}
-                src={!table.currentOrder.length ? mesaOff : mesaOn}
+                src={!table.currentOrder.length && table.total.length ? mesaOpen :
+                   table.currentOrder.length ? mesaOn : mesaOff }
               ></input>
             </Col>
           );

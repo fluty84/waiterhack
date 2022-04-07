@@ -78,8 +78,8 @@ const uploadProductImage = e => {
         <>
             <MenuList newProduct={newProduct}></MenuList>
 
-            <h4>Nuevo producto </h4>
-            <Form onSubmit={handleSubmit} >
+            <Form className='newProduct' onSubmit={handleSubmit} >
+                <h4>Añadir nuevo producto </h4>
                 <Form.Group>
                 <Form.Label>Nombre del Producto</Form.Label>
                 
@@ -148,6 +148,7 @@ const uploadProductImage = e => {
                     label="allergens"
                     onChange={handleInputChange}
                 >
+                    <option value={'nothing'}></option>
                     <option value={'frutos secos'}>Frutos Secos</option>
                     <option value={'pescado'}>Pescado</option>
                     <option value={'cruzcampo'}>Cruz-Campo</option>
@@ -155,7 +156,7 @@ const uploadProductImage = e => {
                 </Form.Select>
                 </Form.Group>
                 </div>
-                <Button variant="outlined" size="small" className= "btn-primary" type='submit' disabled={loadingImage}  >{loadingImage ? 'Cargando imagen' : 'Añadir producto'}
+                <Button variant="outlined" size="small" className= "btn-primary new-btn" type='submit' disabled={loadingImage}  >{loadingImage ? 'Cargando imagen' : 'Añadir producto'}
 
                 </Button>
             </Form>

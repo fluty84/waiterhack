@@ -11,11 +11,7 @@ import "./FinalOrder.css"
 const FinalOrder = (props) => {
 
   let navigate = useNavigate();
-
-
-
   let { tableId, _id } = useParams();
-
 
   if (tableId) {
   } else {
@@ -33,16 +29,8 @@ const FinalOrder = (props) => {
   const [orderDataNoIds, setOrderDataNoIds] = useState([]);
   // ARRAY DE ARRAYS [Cerveza, cantidad, precio]
   const [arrFinalOrder, setArrFinalOrder] = useState([]);
-
-
-  // useEffect(() => {
-  //   if (value.user != null) {
-  //     setTable({
-  //       ...table,
-  //       restaurantId: value.user._id,
-  //     })
-  //   }
-  // }, [value.user])
+  // ARRAY DE ARRAYS CON PEDIDO MODIFICADO
+  const [newOrder, setNewOrder] = useState([])
 
   const { isLoggedIn } = useContext(AuthContext);
   useEffect(() => {
@@ -54,16 +42,15 @@ const FinalOrder = (props) => {
   }, [finalOrderData]);
 
   useEffect(() => {
-    console.log(tableId, "table");
+
     restaurantService
       .checkTable(tableId)
       .then((res) => {
-        console.log(res)
         setMenuData(res.data.restaurantId[0].menu)
         setFinalOrderData(res.data.total.flat())
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [arrFinalOrder]);
 
   useEffect(() => {
     props.getDataFromFinalOrder(arrFinalOrder)
@@ -80,6 +67,7 @@ const FinalOrder = (props) => {
   };
 
   const objToArr = (arrOfObjects) => {
+
     const arrOfOrders = [];
 
     arrOfObjects.forEach((elm, idx) => {
@@ -95,20 +83,46 @@ const FinalOrder = (props) => {
 
             if (menuItem.name === arrOfOrders[idx][index][0]) {
 
-
               arrOfOrders[idx][index].length < 3 &&
                 arrOfOrders[idx][index].push(menuItem.price)
             }
           })
         }
       })
+
     })
 
-    setArrFinalOrder((arrOfOrders.flat()))
+    const ordersResume = []
+
+    const flatArrOfOrders = arrOfOrders.flat()
+    flatArrOfOrders.forEach(order => {
+      if (!ordersResume.includes(order[0])) {
+        ordersResume.push(order[0])
+      }
+    })
+
+    const newArrOrderResume = ordersResume.map((elm) => {
+      return [elm]
+    })
+
+    let finalSum = 0
+
+    newArrOrderResume.forEach((order, index) => {
+
+      flatArrOfOrders.forEach(eachOrder => {
+        if (order[0] === eachOrder[0]) {
+          finalSum += parseInt(eachOrder[1])
+          newArrOrderResume[index][2] = eachOrder[2]
+        }
+      })
+      newArrOrderResume[index][1] = finalSum
+      finalSum = 0
+    })
+
+    setArrFinalOrder(newArrOrderResume)
     props.getDataFromFinalOrder((arrOfOrders.flat()))
 
   }
-
 
 
   const resetTable = () => {
@@ -116,6 +130,35 @@ const FinalOrder = (props) => {
       .resetTable(tableId)
       .then((x) => navigate("/panel", { replace: true }))
       .catch(e => console.log(e))
+
+  }
+
+  const handleInputChange = e => {
+
+    const { value, name } = e.target
+
+    setNewOrder(
+      {
+        ...newOrder,
+        [name]: value
+      }
+    )
+  }
+
+  const modifyTotal = (e) => {
+    e.preventDefault()
+
+    arrFinalOrder.forEach(elm => {
+      for (const property in newOrder) {
+        if (elm[0] === property) {
+          elm[1] = parseInt(newOrder[property])
+        }
+      }
+    })
+
+    restaurantService
+      .editFinalOrder({ arrFinalOrder, tableId })
+      .catch(err => console.log(err))
 
   }
 
@@ -139,20 +182,23 @@ const FinalOrder = (props) => {
 
 
 
-                {isLoggedIn ? 
-                
-                <div className="topayForm" >
-                <span class="input-group-text opacity">{order[0]}</span>
-                <input
-                  type="number"
-                  class="form-control"
-                  name={order[0]}
-                  aria-label="Dollar amount (with dot and two decimal places)"
-                  defaultValue={order[1]}
-                  min="0"
-                  max="100"
-                />
-                </div>
+                {isLoggedIn ?
+
+                  <div className="topayForm" >
+                    <span class="input-group-text opacity">{order[0]}</span>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="units"
+                      name={order[0]}
+                      aria-label="Dollar amount (with dot and two decimal places)"
+                      defaultValue={order[1]}
+                      min="0"
+                      max="100"
+                      onChange={handleInputChange}
+                    />
+                    <span class="input-group-text opacity">{order[2]}€ x ud.</span>
+                  </div>
                   :
                   <div className="topayForm">
                     <span class="input-group-text opacity">{order[0]}</span>
@@ -168,20 +214,20 @@ const FinalOrder = (props) => {
                       readOnly
                     />
 
-                <input type="hidden" value={tableId} name="id"></input>
-                
-                <span className="input-group-text opacity" id="productTotal" > {parseInt(order[1]) * order[2]} € </span>
-                
+                    <input type="hidden" value={tableId} name="id"></input>
+
+                    <span className="input-group-text opacity" id="productTotal" > {parseInt(order[1]) * order[2]} €  </span>
+
                   </div>}
               </div>
             </div>
           );
         })}
-        {isLoggedIn ? <><button type="submit" href="#">Actualizar cuenta</button> </>
+        {isLoggedIn ? <><Button onClick={modifyTotal}>Actualizar cuenta</Button> </>
           : <Button className="btn-primary" href="/payment-gateway">Proceder a pago</Button>}
       </form>
 
-      {isLoggedIn && <Button onClick={resetTable}>Resetear mesa</Button>}
+      {isLoggedIn && <Button onClick={resetTable}>Resetear mesa pagada</Button>}
     </>
   );
 };

@@ -4,3 +4,11 @@
     background-color: rgba(41, 41, 41, 0.6);
     color: white;
 }
+
+.buttonDelete {
+    color: rgba(255, 0, 0, 0.434)
+}
+
+.buttonDelete:hover {
+    color: rgb(255, 0, 0)
+}

@@ -7,6 +7,9 @@
 
 }
 
+.yellow-title {
+    color: rgb(254, 254, 103);
+}
 
 .btn-primary:hover {
     color: #fff;

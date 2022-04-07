@@ -42,10 +42,11 @@ class RestaurantService {
   };
 
   editFinalOrder = (order) => {
+    return this.api.post('/update-total', order)
+  }
 
-    console.log(order)
-    return this.api.get('/update-total', order)
-    
+  deleteTable = (tableId) => {
+    return this.api.post('/delete-table', {tableId})
   }
 
   verify(token) {

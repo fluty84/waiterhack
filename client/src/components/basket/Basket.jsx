@@ -134,8 +134,10 @@ function Basket(props) {
 
   let cuentaTotal = null;
 
+// suma el total de productos
+
   function filter() {
-    // suma el total de productos
+    
     let newArr = [];
     orders.forEach((product) => {
       newArr.push(Object.keys(product).flat());

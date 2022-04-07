@@ -2,12 +2,17 @@ import { useEffect, useState } from "react"
 import { useContext } from "react"
 import restaurantService from "../../services/restaurant.services"
 import { Form, Button } from "react-bootstrap"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+
 import "./CreateOrder.css"
+
+
 const CreateOrder = (props) => {
 
   const [products, setProducts] = useState([])
   const [orderForm, setOrderForm] = useState({})
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     loadMenu()
@@ -97,8 +102,9 @@ const CreateOrder = (props) => {
           )
         })}
           <Button type="submit" size="sm" variant="primary" className="shadow p-3">Enviar orden</Button>
-       
+          <Button onClick={() => navigate(-1)}>Volver</Button>
       </Form>
+      
     </>
   )
 }

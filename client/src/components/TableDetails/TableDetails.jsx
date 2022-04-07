@@ -44,7 +44,7 @@ const TableDetails = ({ order, handleClose, number, tableIdModal }) => {
   };
 
   const cancel = () => {
-    socket.emit("join_room", "cancelado");
+    //socket.emit("join_room", "cancelado");
 
     restaurantService
       .cancelOrder({ id: tableId[0] })
@@ -54,9 +54,20 @@ const TableDetails = ({ order, handleClose, number, tableIdModal }) => {
       .catch((err) => console.log(err));
   };
 
+  const tableDelete = () => {
+    let ok = window.confirm('¿Seguro que quieres borrar la mesa?')
+    if (ok){
+      console.log(tableIdModal)
+      restaurantService 
+        .deleteTable(tableIdModal)
+        .then(() => handleClose())
+        .catch((err) => console.log(err))
+    }
+  }
+
   return (
     <div className="order">
-      <h1>Mesa {number} </h1>
+      <h1>Mesa {number} </h1> <Button className="buttonDelete" onClick={() => tableDelete()}>Borrar Mesa</Button>
       <Row>
         <Col md={6}>
           {newArr.map((item) => {
